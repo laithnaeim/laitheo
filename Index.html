@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laitheo — One home for the things you actually buy</title>
+<meta name="description" content="Laitheo: perfumes & testers, lifetime subscriptions, clothing and services in one place.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2A2E; --base:#FAF7F1; --accent:#C0693B; --accent-d:#a5582f; --teal:#3E7C74;
+    --line:#DCD5C9; --text:#20201C; --text2:#5d5b52; --card:#FFFFFF; --soft:#eee8dc;
+    --radius-lg:14px; --radius-sm:6px; --maxw:1180px;
+  }
+  [data-theme="dark"]{
+    --ink:#EDE8DD; --base:#12191B; --accent:#D9814F; --accent-d:#c26f40; --teal:#6db3a9;
+    --line:#2b3a3d; --text:#EDE8DD; --text2:#a7a597; --card:#1a2427; --soft:#223035;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--base);color:var(--text);font-family:'Manrope','Tajawal',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s}
+  [dir="rtl"] body{font-family:'Tajawal','Manrope',sans-serif}
+  h1,h2,h3,.brand{font-family:'Fraunces','Tajawal',serif}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;color:inherit}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--base) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .headerbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px;max-width:var(--maxw);margin:0 auto}
+  .brand{font-size:1.5rem;font-weight:600;color:var(--ink);letter-spacing:.3px}
+  nav.tabs{display:flex;gap:26px}
+  nav.tabs a{font-size:.95rem;font-weight:500;padding:6px 2px;border-bottom:2px solid transparent;transition:.15s}
+  nav.tabs a:hover{color:var(--accent)}
+  nav.tabs a.active{border-color:var(--accent);color:var(--accent)}
+  .header-actions{display:flex;align-items:center;gap:10px}
+  .hsearch{position:relative}
+  .hsearch input{width:170px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);font-size:.85rem;font-family:inherit}
+  .icon-btn,.pill-btn{height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line);cursor:pointer;color:var(--ink);font-size:.82rem;font-weight:600}
+  .icon-btn{width:36px}
+  .pill-btn{padding:0 14px}
+  .pill-btn.solid{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .pill-btn.solid:hover{background:var(--accent-d)}
+  .avatar{width:36px;height:36px;border-radius:50%;background:var(--soft);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;border:1px solid var(--line);position:relative}
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px}
+  .menu-toggle span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0}
+  .acct{position:relative}
+  .acct-menu{display:none;position:absolute;top:44px;inset-inline-end:0;min-width:210px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:14px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:60}
+  .acct-menu.open{display:block}
+  .acct-menu p{font-size:.85rem;color:var(--text2);margin-bottom:10px;word-break:break-all}
+  .acct-menu strong{display:block;color:var(--text);font-size:.95rem}
+
+  @media (max-width:980px){
+    nav.tabs{position:absolute;top:100%;left:0;right:0;background:var(--base);border-bottom:1px solid var(--line);flex-direction:column;gap:0;max-height:0;overflow:hidden;transition:max-height .25s}
+    nav.tabs.open{max-height:300px}
+    nav.tabs a{padding:14px 24px;border-bottom:1px solid var(--line)}
+    nav.tabs a.active{border-inline-start:3px solid var(--accent)}
+    .menu-toggle{display:block}
+    .hsearch{display:none}
+    .hide-sm{display:none}
+  }
+
+  main{min-height:60vh}
+  .page{display:none;animation:fade .3s ease}
+  .page.visible{display:block}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  /* Hero */
+  .hero{padding:72px 0 56px;border-bottom:1px solid var(--line)}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(2rem,4vw,3.1rem);font-weight:500;line-height:1.12;color:var(--ink);max-width:14ch}
+  .hero p{margin-top:18px;max-width:46ch;color:var(--text2);font-size:1.05rem}
+  .hero-ctas{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:12px 24px;border-radius:var(--radius-sm);font-weight:600;font-size:.95rem;cursor:pointer;border:1px solid transparent;background:none}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-d)}
+  .btn-ghost{border-color:var(--ink);color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--base)}
+  .hero-mosaic{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .mosaic-tile{aspect-ratio:1/1;border-radius:var(--radius-lg);display:flex;align-items:flex-end;padding:16px;color:#fff;font-weight:600;font-size:.9rem;cursor:pointer;border:0;text-align:start}
+  .mosaic-tile:nth-child(1){background:linear-gradient(160deg,#C0693B,#8f4826)}
+  .mosaic-tile:nth-child(2){background:linear-gradient(160deg,#3E7C74,#24473f)}
+  .mosaic-tile:nth-child(3){background:linear-gradient(160deg,#2c4147,#101a1d)}
+  .mosaic-tile:nth-child(4){background:linear-gradient(160deg,#8f8571,#5c5646)}
+
+  .section{padding:52px 0}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+  .sec-head h2{font-size:1.5rem;font-weight:500;color:var(--ink)}
+  .sec-head span,.link-btn{font-size:.85rem;color:var(--text2)}
+  .link-btn{background:none;border:none;cursor:pointer;color:var(--accent);font-weight:600}
+  .page-title{padding:52px 0 8px}
+  .page-title h1{font-size:2rem;font-weight:500;color:var(--ink)}
+  .page-title p{color:var(--text2);margin-top:8px;max-width:60ch}
+
+  /* Products */
+  .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:20px 0;border-bottom:1px solid var(--line);margin-bottom:28px}
+  .toolbar input{flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--card);color:var(--text);font-family:inherit;font-size:.9rem}
+  .cat-strip{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+  .cat-chip{flex:none;padding:8px 16px;border:1px solid var(--line);border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;background:var(--card);white-space:nowrap}
+  .cat-chip.active{background:var(--ink);color:var(--base);border-color:var(--ink)}
+  .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+  .product-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column;gap:8px}
+  .thumb{aspect-ratio:4/3;border-radius:var(--radius-sm);position:relative;margin-bottom:4px}
+  .badge{position:absolute;top:10px;inset-inline-start:10px;background:var(--base);color:var(--ink);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px}
+  .cat-label{font-size:.78rem;color:var(--teal);font-weight:600}
+  .product-card h3{font-size:1.05rem;font-weight:600}
+  .product-card .desc{font-size:.86rem;color:var(--text2);flex:1}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:.74rem;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--text2)}
+  .product-foot{display:flex;align-items:center;justify-content:space-between;margin-top:4px;gap:8px}
+  .price{font-weight:700;color:var(--ink)}
+  .price sup{font-size:.62em;margin-inline-start:3px;color:var(--text2)}
+  .view-btn{font-size:.82rem;font-weight:600;padding:7px 14px;border-radius:var(--radius-sm);border:1px solid var(--ink);cursor:pointer;background:transparent;color:var(--ink)}
+  .view-btn:hover{background:var(--ink);color:var(--base)}
+  .empty{display:none;text-align:center;padding:40px 0;color:var(--text2)}
+
+  /* Detail */
+  .back-btn{margin:32px 0 20px;background:none;border:none;cursor:pointer;font-weight:600;color:var(--text2);font-size:.9rem}
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding-bottom:64px}
+  .detail-img{aspect-ratio:1/1;border-radius:var(--radius-lg);position:relative}
+  .detail-info h1{font-size:2rem;font-weight:500;color:var(--ink);margin:4px 0 8px}
+  .detail-price{font-size:1.5rem;font-weight:700;color:var(--ink)}
+  .detail-price sup{font-size:.5em;color:var(--text2);margin-inline-start:4px}
+  .divider{height:1px;background:var(--line);margin:18px 0}
+  .detail-bio{color:var(--text2);max-width:56ch}
+  .whatsapp-btn{display:inline-flex;align-items:center;gap:10px;margin:22px 0;padding:13px 24px;border-radius:var(--radius-sm);background:#25D366;color:#fff;font-weight:700}
+  .label{font-size:.8rem;font-weight:700;color:var(--ink);margin:18px 0 8px}
+  .spec-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:.9rem;max-width:420px}
+  .spec-row span:first-child{color:var(--text2)}
+
+  /* FAQ */
+  .faq-item{border-bottom:1px solid var(--line);max-width:760px}
+  .faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:16px 0;background:none;border:none;cursor:pointer;font-size:1rem;font-weight:600;text-align:start}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s;color:var(--text2)}
+  .faq-a p{padding-bottom:16px}
+  .faq-item.open .faq-a{max-height:200px}
+  .faq-item.open .faq-icon{transform:rotate(45deg)}
+  .faq-icon{transition:transform .2s;color:var(--accent);font-size:1.3rem}
+
+  /* Reviews */
+  .reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+  .review{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px}
+  .stars{color:var(--accent);letter-spacing:2px;margin-bottom:8px}
+  .review p{font-size:.92rem}
+  .review .who{margin-top:12px;font-weight:700;font-size:.85rem}
+  .review .where{color:var(--text2);font-size:.8rem}
+
+  /* Info cards / payment */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+  .info-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px}
+  .info-card h3{font-size:1.02rem;font-weight:600;margin-bottom:6px}
+  .info-card p{font-size:.88rem;color:var(--text2)}
+  .info-card .ico{font-size:1.5rem;margin-bottom:8px}
+  .note{margin-top:24px;padding:16px 18px;border-inline-start:3px solid var(--accent);background:var(--soft);border-radius:var(--radius-sm);font-size:.9rem;max-width:760px}
+  .status{font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--text2);display:inline-block;margin-top:10px}
+  .status.live{background:color-mix(in srgb,var(--teal) 20%,transparent);color:var(--teal)}
+
+  .policy{max-width:70ch;padding-bottom:64px}
+  .policy h2{font-size:1.1rem;font-weight:600;margin:26px 0 8px;color:var(--ink)}
+  .policy p{color:var(--text2)}
+
+  /* Forms */
+  .form{display:grid;gap:12px;max-width:520px;padding-bottom:64px}
+  .form input,.form textarea,.form select,.modal input{padding:11px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--card);color:var(--text);font-family:inherit;font-size:.92rem;width:100%}
+  .form textarea{min-height:120px;resize:vertical}
+
+  /* Modal */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(10,15,16,.6);z-index:100;align-items:center;justify-content:center;padding:20px}
+  .overlay.open{display:flex}
+  .modal{background:var(--card);border-radius:var(--radius-lg);padding:28px;width:100%;max-width:400px;position:relative;display:grid;gap:12px}
+  .modal h2{font-size:1.4rem;font-weight:500;color:var(--ink)}
+  .modal .close{position:absolute;top:12px;inset-inline-end:14px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text2)}
+  .google-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:11px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;color:#20201C;font-weight:600;cursor:pointer;font-size:.92rem}
+  .or{text-align:center;font-size:.8rem;color:var(--text2)}
+  .msg{font-size:.84rem;min-height:1.2em}
+  .msg.err{color:#c0392b}
+  .msg.ok{color:var(--teal)}
+  .switch{font-size:.85rem;color:var(--text2);text-align:center}
+  .switch button{background:none;border:none;color:var(--accent);font-weight:600;cursor:pointer}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--base);padding:11px 20px;border-radius:999px;font-size:.88rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s;z-index:200}
+  .toast.show{opacity:1}
+
+  footer{border-top:1px solid var(--line);padding:40px 0;margin-top:20px}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
+  .footer-grid h4{font-size:.9rem;margin-bottom:10px;color:var(--ink)}
+  .footer-grid button{display:block;background:none;border:none;cursor:pointer;color:var(--text2);font-size:.88rem;padding:4px 0;text-align:start}
+  .footer-grid button:hover{color:var(--accent)}
+  .footer-grid p{color:var(--text2);font-size:.88rem;max-width:34ch}
+  .copy{margin-top:28px;font-size:.8rem;color:var(--text2)}
+
+  @media (max-width:820px){
+    .hero-grid,.detail-grid,.footer-grid{grid-template-columns:1fr}
+    .hero-mosaic{order:-1}
+    .detail-grid{gap:24px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="headerbar">
+    <a href="#home" class="brand">Laitheo</a>
+    <nav class="tabs" id="tabs">
+      <a href="#home" data-route="home" data-en="Home" data-ar="الرئيسية">Home</a>
+      <a href="#products" data-route="products" data-en="Products" data-ar="المنتجات">Products</a>
+      <a href="#payment" data-route="payment" data-en="Payment Methods" data-ar="طرق الدفع">Payment Methods</a>
+      <a href="#privacy" data-route="privacy" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a>
+    </nav>
+    <div class="header-actions">
+      <div class="hsearch"><input type="text" id="headerSearch" data-en-placeholder="Search products..." data-ar-placeholder="ابحث عن المنتجات..." placeholder="Search products..."></div>
+      <button class="icon-btn" id="themeBtn" title="Theme" aria-label="Toggle theme">◐</button>
+      <button class="pill-btn" id="langBtn">عربي</button>
+      <span id="authOut" style="display:contents">
+        <button class="pill-btn hide-sm" id="signInBtn" data-en="Sign in" data-ar="تسجيل الدخول">Sign in</button>
+        <button class="pill-btn solid hide-sm" id="signUpBtn" data-en="Sign up" data-ar="إنشاء حساب">Sign up</button>
+      </span>
+      <div class="acct">
+        <div class="avatar" id="avatar" title="Account" tabindex="0">
+          <svg id="avatarDefault" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </div>
+        <div class="acct-menu" id="acctMenu">
+          <div id="acctIn" style="display:none">
+            <p><strong id="acctName"></strong><span id="acctEmail"></span></p>
+            <button class="pill-btn" id="signOutBtn" style="width:100%" data-en="Sign out" data-ar="تسجيل الخروج">Sign out</button>
+          </div>
+          <div id="acctOut">
+            <p data-en="Sign in to save your details for faster ordering." data-ar="سجّل الدخول لحفظ بياناتك وتسريع الطلب.">Sign in to save your details for faster ordering.</p>
+            <button class="pill-btn solid" id="acctSignIn" style="width:100%;margin-bottom:8px" data-en="Sign in" data-ar="تسجيل الدخول">Sign in</button>
+            <button class="pill-btn" id="acctSignUp" style="width:100%" data-en="Sign up" data-ar="إنشاء حساب">Sign up</button>
+          </div>
+        </div>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <section id="page-home" class="page">
+    <div class="hero wrap">
+      <div class="hero-grid">
+        <div>
+          <h1 data-en="One home for the things you actually buy." data-ar="مكان واحد لكل ما تشتريه فعلاً.">One home for the things you actually buy.</h1>
+          <p data-en="Perfumes and testers, lifetime subscriptions, clothing, and the services in between — Laitheo brings the everyday shopping list into one clean checkout." data-ar="عطور وتستر، اشتراكات دائمة، ملابس، وخدمات — لايثيو تجمع كل احتياجاتك في مكان واحد.">Perfumes and testers, lifetime subscriptions, clothing, and the services in between — Laitheo brings the everyday shopping list into one clean checkout.</p>
+          <div class="hero-ctas">
+            <a href="#products" class="btn btn-primary" data-en="Browse products" data-ar="تصفح المنتجات">Browse products</a>
+            <a href="#about" class="btn btn-ghost" data-en="About Laitheo" data-ar="عن لايثيو">About Laitheo</a>
+          </div>
+        </div>
+        <div class="hero-mosaic">
+          <button class="mosaic-tile" data-cat="perfumes" data-en="Perfumes & Testers" data-ar="عطور وتستر">Perfumes &amp; Testers</button>
+          <button class="mosaic-tile" data-cat="subscriptions" data-en="Subscriptions" data-ar="اشتراكات">Subscriptions</button>
+          <button class="mosaic-tile" data-cat="clothing" data-en="Clothing" data-ar="ملابس">Clothing</button>
+          <button class="mosaic-tile" data-cat="services" data-en="Services" data-ar="خدمات">Services</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap section">
+      <div class="sec-head"><h2 data-en="Featured" data-ar="مختارات">Featured</h2><button class="link-btn" onclick="location.hash='products'" data-en="View all" data-ar="عرض الكل">View all</button></div>
+      <div class="product-grid" id="featuredGrid"></div>
+      <div class="empty" id="noResults" data-en="No products match your search." data-ar="لا توجد منتجات مطابقة.">No products match your search.</div>
+    </div>
+
+    <div class="wrap section">
+      <div class="sec-head"><h2 data-en="Frequently asked" data-ar="الأسئلة الشائعة">Frequently asked</h2></div>
+      <div id="faqList"></div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="page-products" class="page">
+    <div class="wrap">
+      <div class="page-title"><h1 data-en="Products" data-ar="المنتجات">Products</h1><p data-en="Everything Laitheo sells, in one catalog." data-ar="كل ما تبيعه لايثيو في كتالوج واحد.">Everything Laitheo sells, in one catalog.</p></div>
+      <div class="toolbar">
+        <input type="text" id="pageSearch" data-en-placeholder="Search products..." data-ar-placeholder="ابحث عن المنتجات..." placeholder="Search products...">
+        <div class="cat-strip" id="catStrip"></div>
+      </div>
+      <div class="product-grid" id="productsGrid"></div>
+      <div class="empty" id="noResultsPage" data-en="No products match your search." data-ar="لا توجد منتجات مطابقة.">No products match your search.</div>
+    </div>
+  </section>
+
+  <!-- DETAIL -->
+  <section id="page-detail" class="page">
+    <div class="wrap">
+      <button class="back-btn" id="backBtn"><span id="backArrow">←</span> <span data-en="Back" data-ar="رجوع">Back</span></button>
+      <div class="detail-grid">
+        <div class="detail-img" id="detailImg"></div>
+        <div class="detail-info">
+          <p class="cat-label" id="detailCat"></p>
+          <h1 id="detailName"></h1>
+          <div class="detail-price" id="detailPrice"></div>
+          <div class="divider"></div>
+          <p class="detail-bio" id="detailBio"></p>
+          <a id="detailWhatsApp" href="#" target="_blank" rel="noopener" class="whatsapp-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.8a9.9 9.9 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 01-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 012.89 6.99c0 5.45-4.44 9.88-9.9 9.88z"/></svg>
+            <span data-en="Buy on WhatsApp" data-ar="اشتر عبر واتساب">Buy on WhatsApp</span>
+          </a>
+          <p class="label" id="notesLabel"></p>
+          <div class="tags" id="detailNotes"></div>
+          <p class="label" data-en="Details" data-ar="التفاصيل">Details</p>
+          <div id="detailSpecs"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAYMENT -->
+  <section id="page-payment" class="page">
+    <div class="wrap">
+      <div class="page-title"><h1 data-en="Payment Methods" data-ar="طرق الدفع">Payment Methods</h1><p data-en="Multiple secure ways to pay. More options are coming as online checkout is enabled." data-ar="طرق دفع متعددة وآمنة. المزيد قريباً مع تفعيل الدفع الإلكتروني.">Multiple secure ways to pay. More options are coming as online checkout is enabled.</p></div>
+      <div class="cards section">
+        <div class="info-card"><div class="ico">🏦</div><h3 data-en="Bank Transfer" data-ar="تحويل بنكي">Bank Transfer</h3><p data-en="Direct UAE bank transfer. Details shared upon order confirmation." data-ar="تحويل بنكي مباشر. التفاصيل عند تأكيد الطلب.">Direct UAE bank transfer. Details shared upon order confirmation.</p><span class="status live" data-en="Available" data-ar="متاح">Available</span></div>
+        <div class="info-card"><div class="ico">💵</div><h3 data-en="Cash on Delivery" data-ar="الدفع عند الاستلام">Cash on Delivery</h3><p data-en="Pay in cash when your order arrives. Physical items in selected areas." data-ar="ادفع نقداً عند الاستلام للمنتجات المادية في مناطق محددة.">Pay in cash when your order arrives. Physical items in selected areas.</p><span class="status live" data-en="Available" data-ar="متاح">Available</span></div>
+        <div class="info-card"><div class="ico">🌐</div><h3 data-en="PayPal / Wise" data-ar="باي بال / وايز">PayPal / Wise</h3><p data-en="International payments via PayPal or Wise. Upon request." data-ar="مدفوعات دولية عبر باي بال أو وايز عند الطلب.">International payments via PayPal or Wise. Upon request.</p><span class="status live" data-en="On request" data-ar="عند الطلب">On request</span></div>
+        <div class="info-card"><div class="ico">💬</div><h3 data-en="WhatsApp Order" data-ar="طلب عبر واتساب">WhatsApp Order</h3><p data-en="Place your order on WhatsApp and we guide you through payment." data-ar="قدّم طلبك عبر واتساب وسنرشدك خطوة بخطوة.">Place your order on WhatsApp and we guide you through payment.</p><span class="status live" data-en="Available" data-ar="متاح">Available</span></div>
+        <div class="info-card"><div class="ico">💳</div><h3 data-en="Card & Apple Pay" data-ar="بطاقة وآبل باي">Card &amp; Apple Pay</h3><p data-en="Online card checkout is planned for a later version." data-ar="الدفع بالبطاقة عبر الإنترنت قيد التخطيط لإصدار لاحق.">Online card checkout is planned for a later version.</p><span class="status" data-en="Coming soon" data-ar="قريباً">Coming soon</span></div>
+      </div>
+      <div class="note" data-en="Your order is confirmed only after payment is received and verified. We send a confirmation on WhatsApp once your order is processed. For subscriptions, access details are delivered after confirmation." data-ar="يُؤكَّد طلبك بعد استلام الدفع والتحقق منه. سنرسل تأكيداً عبر واتساب. تُسلَّم بيانات الاشتراكات بعد التأكيد.">Your order is confirmed only after payment is received and verified. We send a confirmation on WhatsApp once your order is processed. For subscriptions, access details are delivered after confirmation.</div>
+      <div style="height:64px"></div>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section id="page-privacy" class="page">
+    <div class="wrap">
+      <div class="page-title"><h1 data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</h1><p data-en="A starting policy for Laitheo. It will be updated as new features are added." data-ar="سياسة أولية للايثيو، وسيتم تحديثها مع إضافة ميزات جديدة.">A starting policy for Laitheo. It will be updated as new features are added.</p></div>
+      <div class="policy">
+        <h2 data-en="What we collect" data-ar="ما الذي نجمعه">What we collect</h2>
+        <p data-en="If you create an account we store your name, email address and profile photo from your sign-in method (Google or email). When you order we use the details you share to fulfil it." data-ar="عند إنشاء حساب نحفظ اسمك وبريدك وصورتك من طريقة تسجيل الدخول (جوجل أو البريد). عند الطلب نستخدم البيانات التي تشاركها لتنفيذه.">If you create an account we store your name, email address and profile photo from your sign-in method (Google or email). When you order we use the details you share to fulfil it.</p>
+        <h2 data-en="How we use it" data-ar="كيف نستخدمها">How we use it</h2>
+        <p data-en="Data is used only to run your account, process and follow up on orders. We do not sell customer information." data-ar="تُستخدم البيانات فقط لإدارة حسابك ومعالجة الطلبات ومتابعتها. لا نبيع بيانات العملاء.">Data is used only to run your account, process and follow up on orders. We do not sell customer information.</p>
+        <h2 data-en="Storage" data-ar="التخزين">Storage</h2>
+        <p data-en="Account data is stored securely with Google Firebase. You can ask us to delete your account and data at any time." data-ar="تُخزَّن بيانات الحساب بأمان لدى Google Firebase. يمكنك طلب حذف حسابك وبياناتك في أي وقت.">Account data is stored securely with Google Firebase. You can ask us to delete your account and data at any time.</p>
+        <h2 data-en="Returns" data-ar="الاستبدال">Returns</h2>
+        <p data-en="Unopened physical items can be exchanged within 3 days. Opened products, activated subscriptions and delivered services are not refundable." data-ar="يمكن استبدال المنتجات المادية غير المفتوحة خلال ٣ أيام. لا تُسترد المنتجات المفتوحة أو الاشتراكات المفعّلة أو الخدمات المنفذة.">Unopened physical items can be exchanged within 3 days. Opened products, activated subscriptions and delivered services are not refundable.</p>
+        <h2 data-en="Contact" data-ar="التواصل">Contact</h2>
+        <p data-en="Questions about this policy can be sent through our Contact page." data-ar="يمكنك إرسال أسئلتك عبر صفحة التواصل.">Questions about this policy can be sent through our Contact page.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="page-reviews" class="page">
+    <div class="wrap">
+      <div class="page-title"><h1 data-en="Customer Reviews" data-ar="تقييمات العملاء">Customer Reviews</h1><p data-en="What our customers say." data-ar="ماذا يقول عملاؤنا.">What our customers say.</p></div>
+      <div class="reviews-grid section" id="reviewsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="page-about" class="page">
+    <div class="wrap">
+      <div class="page-title"><h1 data-en="About Laitheo" data-ar="عن لايثيو">About Laitheo</h1><p data-en="Based in Dubai, Laitheo puts fragrances, digital subscriptions, clothing and services in one storefront." data-ar="مقرها دبي، تجمع لايثيو العطور والاشتراكات الرقمية والملابس والخدمات في متجر واحد.">Based in Dubai, Laitheo puts fragrances, digital subscriptions, clothing and services in one storefront.</p></div>
+      <div class="cards section">
+        <div class="info-card"><h3 data-en="Genuine products" data-ar="منتجات أصلية">Genuine products</h3><p data-en="Every item is sourced from trusted suppliers and checked before it ships." data-ar="كل منتج من موردين موثوقين ويُفحص قبل الشحن.">Every item is sourced from trusted suppliers and checked before it ships.</p></div>
+        <div class="info-card"><h3 data-en="Clear pricing" data-ar="أسعار واضحة">Clear pricing</h3><p data-en="Prices are shown in AED on every listing, with no surprises at checkout." data-ar="الأسعار بالدرهم على كل منتج بلا مفاجآت.">Prices are shown in AED on every listing, with no surprises at checkout.</p></div>
+        <div class="info-card"><h3 data-en="Direct support" data-ar="دعم مباشر">Direct support</h3><p data-en="Order and get help straight on WhatsApp." data-ar="اطلب واحصل على المساعدة مباشرة عبر واتساب.">Order and get help straight on WhatsApp.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="page-contact" class="page">
+    <div class="wrap">
+      <div class="page-title"><h1 data-en="Contact" data-ar="تواصل معنا">Contact</h1><p data-en="Send us a message. It opens WhatsApp with your details filled in." data-ar="أرسل لنا رسالة. سيفتح واتساب مع تعبئة بياناتك.">Send us a message. It opens WhatsApp with your details filled in.</p></div>
+      <div class="form section">
+        <input id="cName" data-en-placeholder="Your name" data-ar-placeholder="اسمك" placeholder="Your name">
+        <input id="cPhone" data-en-placeholder="Phone" data-ar-placeholder="الهاتف" placeholder="Phone">
+        <input id="cSubject" data-en-placeholder="Subject" data-ar-placeholder="الموضوع" placeholder="Subject">
+        <textarea id="cMsg" data-en-placeholder="Message" data-ar-placeholder="الرسالة" placeholder="Message"></textarea>
+        <button class="btn btn-primary" id="sendWa" data-en="Send on WhatsApp" data-ar="أرسل عبر واتساب">Send on WhatsApp</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><div class="brand">Laitheo</div><p data-en="Perfumes, subscriptions, clothing and services in one place." data-ar="عطور واشتراكات وملابس وخدمات في مكان واحد.">Perfumes, subscriptions, clothing and services in one place.</p></div>
+      <div><h4 data-en="Navigate" data-ar="التنقل">Navigate</h4>
+        <button data-go="home" data-en="Home" data-ar="الرئيسية">Home</button>
+        <button data-go="products" data-en="Products" data-ar="المنتجات">Products</button>
+        <button data-go="payment" data-en="Payment Methods" data-ar="طرق الدفع">Payment Methods</button>
+        <button data-go="privacy" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</button></div>
+      <div><h4 data-en="More" data-ar="المزيد">More</h4>
+        <button data-go="reviews" data-en="Reviews" data-ar="التقييمات">Reviews</button>
+        <button data-go="about" data-en="About" data-ar="من نحن">About</button>
+        <button data-go="contact" data-en="Contact" data-ar="تواصل معنا">Contact</button></div>
+    </div>
+    <p class="copy">© 2026 Laitheo · Dubai, UAE</p>
+  </div>
+</footer>
+
+<!-- Auth modals -->
+<div class="overlay" id="signInOverlay">
+  <div class="modal">
+    <button class="close" data-close>×</button>
+    <h2 data-en="Sign in" data-ar="تسجيل الدخول">Sign in</h2>
+    <button class="google-btn" data-google>
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.5 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 010-9.4l-7.9-6.1a24 24 0 000 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.6-4-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+      <span data-en="Continue with Google" data-ar="المتابعة عبر جوجل">Continue with Google</span>
+    </button>
+    <div class="or" data-en="or use email" data-ar="أو استخدم البريد">or use email</div>
+    <input type="email" id="inEmail" placeholder="Email" autocomplete="email">
+    <input type="password" id="inPass" placeholder="Password" autocomplete="current-password">
+    <div class="msg" id="inMsg"></div>
+    <button class="btn btn-primary" id="inSubmit" data-en="Sign in" data-ar="تسجيل الدخول">Sign in</button>
+    <button class="link-btn" id="forgotBtn" data-en="Forgot password?" data-ar="نسيت كلمة المرور؟">Forgot password?</button>
+    <div class="switch"><span data-en="New to Laitheo?" data-ar="جديد في لايثيو؟">New to Laitheo?</span> <button data-switch="up" data-en="Sign up" data-ar="إنشاء حساب">Sign up</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="signUpOverlay">
+  <div class="modal">
+    <button class="close" data-close>×</button>
+    <h2 data-en="Create your account" data-ar="أنشئ حسابك">Create your account</h2>
+    <button class="google-btn" data-google>
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.5 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 010-9.4l-7.9-6.1a24 24 0 000 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.6-4-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+      <span data-en="Sign up with Google" data-ar="التسجيل عبر جوجل">Sign up with Google</span>
+    </button>
+    <div class="or" data-en="or use email" data-ar="أو استخدم البريد">or use email</div>
+    <input type="text" id="upName" data-en-placeholder="Full name" data-ar-placeholder="الاسم الكامل" placeholder="Full name" autocomplete="name">
+    <input type="email" id="upEmail" placeholder="Email" autocomplete="email">
+    <input type="password" id="upPass" placeholder="Password (6+ characters)" autocomplete="new-password">
+    <div class="msg" id="upMsg"></div>
+    <button class="btn btn-primary" id="upSubmit" data-en="Create account" data-ar="إنشاء الحساب">Create account</button>
+    <div class="switch"><span data-en="Already have an account?" data-ar="لديك حساب؟">Already have an account?</span> <button data-switch="in" data-en="Sign in" data-ar="تسجيل الدخول">Sign in</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ============ APP LOGIC (data + UI) ============ -->
+<script>
+/* ---------- CONFIG: edit these ---------- */
+const WHATSAPP_NUMBER = '971XXXXXXXXX'; // Laitheo's WhatsApp number, digits only with country code
+const CURRENCY = 'AED';
+
+/* ---------- DATA (same shape as the old Lamoh product data, bilingual) ----------
+   category: perfumes | subscriptions | clothing | services
+   notes    = highlight tags shown on card + detail (old "fragrance notes")
+   specs    = [label, value] rows on the detail page
+   color    = thumbnail/detail gradient colour                                   */
+const categories = [
+  {id:'all',           name:{en:'All',                 ar:'الكل'}},
+  {id:'perfumes',      name:{en:'Perfumes & Testers',  ar:'عطور وتستر'}},
+  {id:'subscriptions', name:{en:'Subscriptions',       ar:'اشتراكات'}},
+  {id:'clothing',      name:{en:'Clothing',            ar:'ملابس'}},
+  {id:'services',      name:{en:'Services',            ar:'خدمات'}}
+];
+const notesLabel = {
+  perfumes:{en:'Fragrance notes',ar:'مكونات العطر'}, subscriptions:{en:'Includes',ar:'يشمل'},
+  clothing:{en:'Features',ar:'المميزات'}, services:{en:'Includes',ar:'يشمل'}
+};
+const products = [
+  {id:1,category:'perfumes',catLabel:{en:'Oriental · Woody',ar:'شرقي · خشبي'},name:{en:'Amber Noir EDP 100ml',ar:'عنبر نوير 100مل'},price:320,badge:{en:'Bestseller',ar:'الأكثر مبيعاً'},featured:true,
+   bio:{en:'A warm oriental fragrance with amber and oud at its heart, settling into a long vanilla and smoke trail.',ar:'عطر شرقي دافئ قلبه العنبر والعود، يستقر بأثر طويل من الفانيليا والدخان.'},
+   notes:{en:['Amber','Oud','Vanilla','Smoke'],ar:['عنبر','عود','فانيليا','دخان']},
+   specs:{en:[['Size','100 ml'],['Concentration','EDP'],['Gender','Unisex']],ar:[['الحجم','١٠٠ مل'],['التركيز','EDP'],['الجنس','للجنسين']]},color:'#b8742f'},
+  {id:2,category:'perfumes',catLabel:{en:'Tester · Oriental',ar:'تستر · شرقي'},name:{en:'Amber Noir Tester 5ml',ar:'عنبر نوير تستر 5مل'},price:45,badge:{en:'Try first',ar:'جرّب أولاً'},featured:true,
+   bio:{en:'Try Amber Noir before committing to the full bottle. Same fragrance in a travel-size tester.',ar:'جرّب عنبر نوير قبل شراء الزجاجة الكاملة. نفس العطر بحجم تستر صغير.'},
+   notes:{en:['Amber','Oud','Vanilla'],ar:['عنبر','عود','فانيليا']},
+   specs:{en:[['Size','5 ml'],['Concentration','EDP'],['Gender','Unisex']],ar:[['الحجم','٥ مل'],['التركيز','EDP'],['الجنس','للجنسين']]},color:'#8a5522'},
+  {id:3,category:'perfumes',catLabel:{en:'Fresh · Citrus',ar:'منعش · حمضي'},name:{en:'Citrus Bloom EDT 50ml',ar:'سيتروس بلوم 50مل'},price:180,badge:null,
+   bio:{en:'Bright, fresh everyday wear with citrus opening and a soft musk base.',ar:'عطر منعش ومشرق للاستخدام اليومي بافتتاحية حمضية وقاعدة مسك ناعمة.'},
+   notes:{en:['Bergamot','Neroli','White Musk'],ar:['برغموت','نيرولي','مسك أبيض']},
+   specs:{en:[['Size','50 ml'],['Concentration','EDT'],['Gender','Unisex']],ar:[['الحجم','٥٠ مل'],['التركيز','EDT'],['الجنس','للجنسين']]},color:'#c9a43a'},
+  {id:4,category:'subscriptions',catLabel:{en:'Music',ar:'موسيقى'},name:{en:'Spotify Lifetime',ar:'سبوتيفاي مدى الحياة'},price:220,badge:{en:'Popular',ar:'شائع'},featured:true,
+   bio:{en:'One-time activation on your account with no recurring fees. Access details delivered after payment is confirmed.',ar:'تفعيل لمرة واحدة على حسابك بدون رسوم متكررة. تُسلَّم التفاصيل بعد تأكيد الدفع.'},
+   notes:{en:['Ad-free','Offline downloads','No renewals'],ar:['بدون إعلانات','تحميل بدون إنترنت','بدون تجديد']},
+   specs:{en:[['Duration','Lifetime'],['Delivery','After payment'],['Type','Digital']],ar:[['المدة','مدى الحياة'],['التسليم','بعد الدفع'],['النوع','رقمي']]},color:'#2f8f5b'},
+  {id:5,category:'subscriptions',catLabel:{en:'Music',ar:'موسيقى'},name:{en:'Spotify 12 Months',ar:'سبوتيفاي 12 شهراً'},price:90,badge:null,
+   bio:{en:'A full year of Premium access on your account.',ar:'سنة كاملة من اشتراك بريميوم على حسابك.'},
+   notes:{en:['Ad-free','Offline downloads'],ar:['بدون إعلانات','تحميل بدون إنترنت']},
+   specs:{en:[['Duration','12 months'],['Delivery','After payment'],['Type','Digital']],ar:[['المدة','١٢ شهراً'],['التسليم','بعد الدفع'],['النوع','رقمي']]},color:'#237348'},
+  {id:6,category:'clothing',catLabel:{en:'Tops',ar:'قمصان'},name:{en:'Oversized Tee — Sand',ar:'تيشيرت أوفرسايز — رملي'},price:95,badge:{en:'New',ar:'جديد'},featured:true,
+   bio:{en:'Heavyweight cotton oversized tee with a relaxed unisex fit.',ar:'تيشيرت قطني ثقيل بقصة أوفرسايز مريحة للجنسين.'},
+   notes:{en:['Heavyweight cotton','Unisex fit'],ar:['قطن ثقيل','قصة للجنسين']},
+   specs:{en:[['Sizes','S – XL'],['Colour','Sand'],['Gender','Unisex']],ar:[['المقاسات','S – XL'],['اللون','رملي'],['الجنس','للجنسين']]},color:'#b7a27c'},
+  {id:7,category:'clothing',catLabel:{en:'Outerwear',ar:'ملابس خارجية'},name:{en:'Cropped Hoodie — Ink',ar:'هودي قصير — أزرق داكن'},price:165,badge:null,
+   bio:{en:'Cropped hoodie with a brushed fleece interior.',ar:'هودي قصير ببطانة فليس ناعمة.'},
+   notes:{en:['Brushed fleece','Cropped cut'],ar:['فليس ناعم','قصة قصيرة']},
+   specs:{en:[['Sizes','S – XL'],['Colour','Ink'],['Gender','Unisex']],ar:[['المقاسات','S – XL'],['اللون','أزرق داكن'],['الجنس','للجنسين']]},color:'#1f3a44'},
+  {id:8,category:'services',catLabel:{en:'Delivery',ar:'توصيل'},name:{en:'Express Delivery',ar:'توصيل سريع'},price:25,badge:null,
+   bio:{en:'Same-day delivery within Dubai for physical orders.',ar:'توصيل في نفس اليوم داخل دبي للطلبات المادية.'},
+   notes:{en:['Same day','Dubai only'],ar:['نفس اليوم','دبي فقط']},
+   specs:{en:[['Coverage','Dubai'],['Speed','Same day']],ar:[['التغطية','دبي'],['السرعة','نفس اليوم']]},color:'#3E7C74'},
+  {id:9,category:'services',catLabel:{en:'Gifting',ar:'هدايا'},name:{en:'Gift Wrapping',ar:'تغليف هدايا'},price:15,badge:null,
+   bio:{en:'Add premium gift wrapping and a note to any physical order.',ar:'أضف تغليف هدايا فاخر وبطاقة لأي طلب مادي.'},
+   notes:{en:['Premium wrap','Handwritten note'],ar:['تغليف فاخر','بطاقة مكتوبة']},
+   specs:{en:[['Applies to','Physical orders']],ar:[['ينطبق على','الطلبات المادية']]},color:'#8f8571'}
+];
+const faqs = [
+  {q:{en:'Are your products genuine?',ar:'هل منتجاتكم أصلية؟'},a:{en:'Yes. Every item is sourced from trusted suppliers and checked before it ships.',ar:'نعم. كل منتج من موردين موثوقين ويُفحص قبل الشحن.'}},
+  {q:{en:'How do I place an order?',ar:'كيف أقدم طلباً؟'},a:{en:'Open any product and tap "Buy on WhatsApp". Your order message is filled in for you.',ar:'افتح أي منتج واضغط "اشتر عبر واتساب" وستُعبأ رسالة الطلب تلقائياً.'}},
+  {q:{en:'How do I receive a subscription?',ar:'كيف أستلم الاشتراك؟'},a:{en:'After payment is confirmed we activate it on your account or send the access details on WhatsApp.',ar:'بعد تأكيد الدفع نفعّله على حسابك أو نرسل التفاصيل عبر واتساب.'}},
+  {q:{en:'What payment methods do you accept?',ar:'ما طرق الدفع المقبولة؟'},a:{en:'Bank transfer, cash on delivery for physical items, and PayPal/Wise on request.',ar:'التحويل البنكي، والدفع عند الاستلام للمنتجات المادية، وباي بال/وايز عند الطلب.'}},
+  {q:{en:'Can I return or exchange something?',ar:'هل يمكنني الإرجاع أو الاستبدال؟'},a:{en:'Unopened physical items can be exchanged within 3 days. Activated subscriptions and delivered services are not refundable.',ar:'يمكن استبدال المنتجات المادية غير المفتوحة خلال ٣ أيام. الاشتراكات المفعّلة والخدمات المنفذة لا تُسترد.'}}
+];
+const reviews = [
+  {stars:5,text:{en:'Fast reply on WhatsApp and my Spotify was active within minutes.',ar:'رد سريع على واتساب وتم تفعيل سبوتيفاي خلال دقائق.'},author:'Ahmed K.',location:'Dubai'},
+  {stars:5,text:{en:'The tester let me try the scent first. Then I ordered the full bottle.',ar:'التستر سمح لي بتجربة العطر أولاً، ثم طلبت الزجاجة الكاملة.'},author:'Sara M.',location:'Abu Dhabi'},
+  {stars:5,text:{en:'Great quality tee and quick delivery.',ar:'جودة رائعة للتيشيرت وتوصيل سريع.'},author:'Layla R.',location:'Sharjah'},
+  {stars:4,text:{en:'Smooth ordering and clear prices.',ar:'طلب سلس وأسعار واضحة.'},author:'Omar F.',location:'Dubai'}
+];
+/* NOTE: reviews above are sample text. Replace with real customer reviews. */
+
+/* ---------- STATE / HELPERS ---------- */
+let L = 'en', activeCat = 'all', prevRoute = 'home', searchTerm = '';
+const $ = id => document.getElementById(id);
+const routes = ['home','products','payment','privacy','reviews','about','contact','detail'];
+const tabRoutes = ['home','products','payment','privacy'];
+
+function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2600); }
+
+/* ---------- LANGUAGE + THEME ---------- */
+function applyLang(){
+  document.querySelectorAll('[data-en]').forEach(el=>{ const v=el.getAttribute('data-'+L); if(v!==null) el.innerHTML=v; });
+  document.querySelectorAll('[data-en-placeholder]').forEach(el=>{ el.placeholder = el.getAttribute('data-'+L+'-placeholder'); });
+}
+function toggleLang(){
+  L = L==='en'?'ar':'en';
+  document.documentElement.lang=L; document.documentElement.dir = L==='ar'?'rtl':'ltr';
+  $('langBtn').textContent = L==='en'?'عربي':'English';
+  $('backArrow').textContent = L==='ar'?'→':'←';
+  try{localStorage.setItem('laitheo_lang',L)}catch(e){}
+  applyLang(); renderAll();
+  if(location.hash.startsWith('#product-')) openDetail(+location.hash.split('-')[1],true);
+}
+function toggleTheme(){
+  const t = document.documentElement.dataset.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=t; try{localStorage.setItem('laitheo_theme',t)}catch(e){}
+}
+
+/* ---------- RENDER ---------- */
+function matches(p){
+  const s=searchTerm.toLowerCase();
+  const catOk = activeCat==='all' || p.category===activeCat;
+  const txt = !s || p.name[L].toLowerCase().includes(s) || p.catLabel[L].toLowerCase().includes(s) || p.notes[L].some(n=>n.toLowerCase().includes(s));
+  return catOk && txt;
+}
+function cardHTML(p){
+  return `<div class="product-card"><div class="thumb" style="background:linear-gradient(135deg,${p.color},#0d1517)">${p.badge?`<span class="badge">${p.badge[L]}</span>`:''}</div>
+  <p class="cat-label">${p.catLabel[L]}</p><h3>${p.name[L]}</h3><p class="desc">${p.bio[L].substring(0,95)}...</p>
+  <div class="tags">${p.notes[L].map(n=>`<span class="tag">${n}</span>`).join('')}</div>
+  <div class="product-foot"><div class="price">${p.price}<sup>${CURRENCY}</sup></div><button class="view-btn" onclick="location.hash='product-${p.id}'">${L==='ar'?'عرض التفاصيل':'View details'}</button></div></div>`;
+}
+function renderFeatured(){
+  const list = products.filter(p=>p.featured && matches({...p,category:activeCat==='all'?p.category:p.category}));
+  const src = searchTerm ? products.filter(p=>matches(p)) : products.filter(p=>p.featured);
+  $('featuredGrid').innerHTML = src.map(cardHTML).join('');
+  $('noResults').style.display = src.length?'none':'block';
+}
+function renderCats(){
+  $('catStrip').innerHTML = categories.map(c=>`<button class="cat-chip ${c.id===activeCat?'active':''}" data-cat="${c.id}">${c.name[L]}</button>`).join('');
+}
+function renderProducts(){
+  const src = products.filter(matches);
+  $('productsGrid').innerHTML = src.map(cardHTML).join('');
+  $('noResultsPage').style.display = src.length?'none':'block';
+}
+function renderFAQ(){
+  $('faqList').innerHTML = faqs.map((f,i)=>`<div class="faq-item" id="faq${i}"><button class="faq-q" onclick="toggleFAQ(${i})"><span>${f.q[L]}</span><span class="faq-icon">+</span></button><div class="faq-a"><p>${f.a[L]}</p></div></div>`).join('');
+}
+function toggleFAQ(i){ const it=$('faq'+i), open=it.classList.contains('open'); document.querySelectorAll('.faq-item').forEach(e=>e.classList.remove('open')); if(!open) it.classList.add('open'); }
+function renderReviews(){
+  $('reviewsGrid').innerHTML = reviews.map(r=>`<div class="review"><div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div><p>"${r.text[L]}"</p><p class="who">${r.author}</p><p class="where">${r.location}</p></div>`).join('');
+}
+function renderAll(){ renderCats(); renderFeatured(); renderProducts(); renderFAQ(); renderReviews(); }
+
+/* ---------- DETAIL + WHATSAPP ORDER ---------- */
+function orderText(p){ return `Hello Laitheo! I'm interested in ordering: ${p.name.en} (${p.price} ${CURRENCY}).`; }
+function openDetail(id, keepPrev){
+  const p = products.find(x=>x.id===id); if(!p){ location.hash='products'; return; }
+  $('detailImg').style.background = `linear-gradient(135deg,${p.color},#0d1517)`;
+  $('detailCat').textContent = p.catLabel[L]; $('detailName').textContent = p.name[L];
+  $('detailPrice').innerHTML = `${p.price}<sup>${CURRENCY}</sup>`; $('detailBio').textContent = p.bio[L];
+  $('notesLabel').textContent = notesLabel[p.category][L];
+  $('detailNotes').innerHTML = p.notes[L].map(n=>`<span class="tag">${n}</span>`).join('');
+  $('detailSpecs').innerHTML = p.specs[L].map(([k,v])=>`<div class="spec-row"><span>${k}</span><span>${v}</span></div>`).join('');
+  const wa = $('detailWhatsApp'); wa.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(orderText(p))}`;
+  wa.onclick = () => { if(window.LaitheoDB) window.LaitheoDB.logOrderIntent(p); };
+  setPage('detail');
+}
+
+/* ---------- ROUTING (hash based) ---------- */
+function setPage(name){
+  routes.forEach(r=>$('page-'+r).classList.toggle('visible',r===name));
+  document.querySelectorAll('nav.tabs a').forEach(a=>a.classList.toggle('active',a.dataset.route===name || (name==='detail'&&a.dataset.route==='products')));
+  $('tabs').classList.remove('open'); window.scrollTo({top:0,behavior:'smooth'});
+}
+function route(){
+  const h=(location.hash||'#home').slice(1);
+  if(h.startsWith('product-')){ openDetail(+h.split('-')[1]); return; }
+  if(routes.includes(h) && h!=='detail'){ if(tabRoutes.includes(h)||true) prevRoute=h; setPage(h); }
+  else setPage('home');
+}
+window.addEventListener('hashchange',route);
+
+/* ---------- EVENTS ---------- */
+$('menuToggle').onclick=()=>$('tabs').classList.toggle('open');
+$('themeBtn').onclick=toggleTheme; $('langBtn').onclick=toggleLang;
+$('backBtn').onclick=()=>{ history.length>1 ? history.back() : (location.hash='products'); };
+$('headerSearch').oninput=e=>{ searchTerm=e.target.value; $('pageSearch').value=searchTerm; renderFeatured(); renderProducts(); if(location.hash!=='#home' && location.hash!=='#products') location.hash='products'; };
+$('pageSearch').oninput=e=>{ searchTerm=e.target.value; $('headerSearch').value=searchTerm; renderProducts(); renderFeatured(); };
+$('catStrip').onclick=e=>{ const b=e.target.closest('[data-cat]'); if(!b) return; activeCat=b.dataset.cat; renderCats(); renderProducts(); };
+document.querySelectorAll('.mosaic-tile').forEach(t=>t.onclick=()=>{ activeCat=t.dataset.cat; renderCats(); renderProducts(); location.hash='products'; });
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ location.hash=b.dataset.go; });
+$('sendWa').onclick=()=>{
+  const g=id=>$(id).value;
+  const text=`Hello Laitheo!\n\nName: ${g('cName')||'Customer'}\nPhone: ${g('cPhone')||'N/A'}\nSubject: ${g('cSubject')||'Inquiry'}\nMessage: ${g('cMsg')||'I would like to inquire about your products.'}`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`,'_blank');
+};
+
+/* ---------- MODAL + ACCOUNT MENU ---------- */
+function openModal(which){ closeModals(); $(which==='up'?'signUpOverlay':'signInOverlay').classList.add('open'); $('acctMenu').classList.remove('open'); }
+function closeModals(){ document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open')); }
+$('signInBtn').onclick=$('acctSignIn').onclick=()=>openModal('in');
+$('signUpBtn').onclick=$('acctSignUp').onclick=()=>openModal('up');
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeModals);
+document.querySelectorAll('[data-switch]').forEach(b=>b.onclick=()=>openModal(b.dataset.switch));
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) closeModals(); }));
+$('avatar').onclick=e=>{ e.stopPropagation(); $('acctMenu').classList.toggle('open'); };
+document.addEventListener('click',e=>{ if(!e.target.closest('.acct')) $('acctMenu').classList.remove('open'); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModals(); $('acctMenu').classList.remove('open'); }});
+
+/* ---------- INIT ---------- */
+try{ const t=localStorage.getItem('laitheo_theme'); if(t) document.documentElement.dataset.theme=t; if(localStorage.getItem('laitheo_lang')==='ar') toggleLang(); }catch(e){}
+applyLang(); renderAll(); route();
+</script>
+
+<!-- ============ FIREBASE (Google + email auth, Firestore saving) ============ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, serverTimestamp, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* Paste your Firebase web app config here (Firebase console → Project settings → Your apps → Web app). */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const $ = id => document.getElementById(id);
+const configured = !firebaseConfig.apiKey.startsWith("YOUR_");
+let auth, db;
+if (configured) { const app = initializeApp(firebaseConfig); auth = getAuth(app); db = getFirestore(app); }
+
+const say = (el, text, ok) => { el.textContent = text; el.className = 'msg ' + (ok ? 'ok' : 'err'); };
+const friendly = c => ({
+  'auth/invalid-credential':'Wrong email or password.', 'auth/user-not-found':'No account with that email.',
+  'auth/wrong-password':'Wrong email or password.', 'auth/email-already-in-use':'That email already has an account. Try signing in.',
+  'auth/weak-password':'Password needs at least 6 characters.', 'auth/invalid-email':'Enter a valid email address.',
+  'auth/popup-closed-by-user':'Google sign-in was closed before finishing.', 'auth/unauthorized-domain':'This website domain is not authorised in Firebase yet.',
+  'auth/too-many-requests':'Too many attempts. Try again in a few minutes.'
+}[c] || 'Something went wrong. Please try again.');
+const needConfig = el => { say(el, 'Sign-in is not connected yet. Add your Firebase config in index.html.'); };
+
+async function saveUser(u, extra = {}) {
+  if (!db || !u) return;
+  try {
+    await setDoc(doc(db, 'users', u.uid), {
+      name: u.displayName || extra.name || '', email: u.email || '', photoURL: u.photoURL || '',
+      provider: (u.providerData[0] && u.providerData[0].providerId) || 'password',
+      lastLogin: serverTimestamp()
+    }, { merge: true });
+  } catch (e) { console.warn('saveUser failed', e); }
+}
+
+/* Google */
+document.querySelectorAll('[data-google]').forEach(btn => btn.onclick = async () => {
+  const msg = btn.closest('.modal').querySelector('.msg');
+  if (!configured) return needConfig(msg);
+  try { const r = await signInWithPopup(auth, new GoogleAuthProvider()); await saveUser(r.user); document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open')); }
+  catch (e) { say(msg, friendly(e.code)); }
+});
+/* Email sign in */
+$('inSubmit').onclick = async () => {
+  if (!configured) return needConfig($('inMsg'));
+  try { const r = await signInWithEmailAndPassword(auth, $('inEmail').value.trim(), $('inPass').value); await saveUser(r.user); document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open')); }
+  catch (e) { say($('inMsg'), friendly(e.code)); }
+};
+/* Email sign up */
+$('upSubmit').onclick = async () => {
+  if (!configured) return needConfig($('upMsg'));
+  const name = $('upName').value.trim();
+  try {
+    const r = await createUserWithEmailAndPassword(auth, $('upEmail').value.trim(), $('upPass').value);
+    if (name) await updateProfile(r.user, { displayName: name });
+    await saveUser(r.user, { name });
+    document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
+  } catch (e) { say($('upMsg'), friendly(e.code)); }
+};
+/* Password reset */
+$('forgotBtn').onclick = async () => {
+  if (!configured) return needConfig($('inMsg'));
+  const email = $('inEmail').value.trim();
+  if (!email) return say($('inMsg'), 'Enter your email above first.');
+  try { await sendPasswordResetEmail(auth, email); say($('inMsg'), 'Reset link sent. Check your inbox.', true); }
+  catch (e) { say($('inMsg'), friendly(e.code)); }
+};
+/* Sign out */
+$('signOutBtn').onclick = async () => { if (auth) { await signOut(auth); $('acctMenu').classList.remove('open'); } };
+
+/* UI reacts to auth state. Signed out = default avatar; signed in = Google photo if there is one. */
+function paint(u) {
+  $('authOut').style.display = u ? 'none' : 'contents';
+  $('acctIn').style.display = u ? 'block' : 'none';
+  $('acctOut').style.display = u ? 'none' : 'block';
+  const av = $('avatar'), old = av.querySelector('img'); if (old) old.remove();
+  $('avatarDefault').style.display = 'block';
+  if (u) {
+    $('acctName').textContent = u.displayName || 'Your account'; $('acctEmail').textContent = u.email || '';
+    if (u.photoURL) { const i = document.createElement('img'); i.src = u.photoURL; i.alt = ''; i.referrerPolicy = 'no-referrer'; av.appendChild(i); $('avatarDefault').style.display = 'none'; }
+  }
+}
+if (configured) onAuthStateChanged(auth, u => { paint(u); if (u) saveUser(u); }); else paint(null);
+
+/* Exposed to the main script: saves a record when a signed-in user taps "Buy on WhatsApp". */
+window.LaitheoDB = {
+  async logOrderIntent(p) {
+    if (!db || !auth.currentUser) return;
+    try { await addDoc(collection(db, 'orders'), { uid: auth.currentUser.uid, productId: p.id, product: p.name.en, price: p.price, currency: 'AED', status: 'sent-to-whatsapp', createdAt: serverTimestamp() }); }
+    catch (e) { console.warn('order log failed', e); }
+  }
+};
+</script>
+</body>
+</html>
