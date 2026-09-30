@@ -83,7 +83,7 @@
   .mosaic-tile:nth-child(1){background:linear-gradient(160deg,#C0693B,#8f4826)}
   .mosaic-tile:nth-child(2){background:linear-gradient(160deg,#3E7C74,#24473f)}
   .mosaic-tile:nth-child(3){background:linear-gradient(160deg,#2c4147,#101a1d)}
-  .mosaic-tile:nth-child(4){background:linear-gradient(160deg,#8f8571,#5c5646)}
+  .mosaic-tile:nth-child(4){background:linear-gradient(160deg,#5b4d8f,#241e4a)}
 
   .section{padding:52px 0}
   .sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap}
@@ -102,7 +102,7 @@
   .cat-chip.active{background:var(--ink);color:var(--base);border-color:var(--ink)}
   .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
   .product-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column;gap:8px}
-  .thumb{aspect-ratio:4/3;border-radius:var(--radius-sm);position:relative;margin-bottom:4px}
+  .thumb{aspect-ratio:4/3;border-radius:var(--radius-sm);position:relative;margin-bottom:4px;background-size:cover;background-position:center}
   .badge{position:absolute;top:10px;inset-inline-start:10px;background:var(--base);color:var(--ink);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px}
   .cat-label{font-size:.78rem;color:var(--teal);font-weight:600}
   .product-card h3{font-size:1.05rem;font-weight:600}
@@ -119,7 +119,7 @@
   /* Detail */
   .back-btn{margin:32px 0 20px;background:none;border:none;cursor:pointer;font-weight:600;color:var(--text2);font-size:.9rem}
   .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding-bottom:64px}
-  .detail-img{aspect-ratio:1/1;border-radius:var(--radius-lg);position:relative}
+  .detail-img{aspect-ratio:1/1;border-radius:var(--radius-lg);position:relative;background-size:cover;background-position:center}
   .detail-info h1{font-size:2rem;font-weight:500;color:var(--ink);margin:4px 0 8px}
   .detail-price{font-size:1.5rem;font-weight:700;color:var(--ink)}
   .detail-price sup{font-size:.5em;color:var(--text2);margin-inline-start:4px}
@@ -191,6 +191,18 @@
   .footer-grid p{color:var(--text2);font-size:.88rem;max-width:34ch}
   .copy{margin-top:28px;font-size:.8rem;color:var(--text2)}
 
+  /* Games bundles */
+  .bundle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:36px}
+  .bundle-card{background:linear-gradient(165deg,var(--card),var(--soft));border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden}
+  .bundle-card.pop{border-color:var(--accent)}
+  .bundle-pop-tag{position:absolute;top:14px;inset-inline-end:14px;background:var(--accent);color:#fff;font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:999px}
+  .bundle-count{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:600;color:var(--ink);line-height:1}
+  .bundle-count span{font-size:1rem;font-weight:500;color:var(--text2);margin-inline-start:4px}
+  .bundle-name{font-weight:600;font-size:1rem;margin-top:2px}
+  .bundle-price{font-size:1.3rem;font-weight:700;color:var(--accent);margin-top:6px}
+  .bundle-per{font-size:.78rem;color:var(--text2)}
+  .bundle-card button{margin-top:14px}
+
   @media (max-width:820px){
     .hero-grid,.detail-grid,.footer-grid{grid-template-columns:1fr}
     .hero-mosaic{order:-1}
@@ -246,7 +258,7 @@
       <div class="hero-grid">
         <div>
           <h1 data-en="One home for the things you actually buy." data-ar="مكان واحد لكل ما تشتريه فعلاً.">One home for the things you actually buy.</h1>
-          <p data-en="Perfumes and testers, lifetime subscriptions, clothing, and the services in between — Laitheo brings the everyday shopping list into one clean checkout." data-ar="عطور وتستر، اشتراكات دائمة، ملابس، وخدمات — لايثيو تجمع كل احتياجاتك في مكان واحد.">Perfumes and testers, lifetime subscriptions, clothing, and the services in between — Laitheo brings the everyday shopping list into one clean checkout.</p>
+          <p data-en="Perfumes and testers, lifetime subscriptions, clothing, and games — Laitheo brings the everyday shopping list into one clean checkout." data-ar="عطور وتستر، اشتراكات دائمة، ملابس، وألعاب — لايثيو تجمع كل احتياجاتك في مكان واحد.">Perfumes and testers, lifetime subscriptions, clothing, and games — Laitheo brings the everyday shopping list into one clean checkout.</p>
           <div class="hero-ctas">
             <a href="#products" class="btn btn-primary" data-en="Browse products" data-ar="تصفح المنتجات">Browse products</a>
             <a href="#about" class="btn btn-ghost" data-en="About Laitheo" data-ar="عن لايثيو">About Laitheo</a>
@@ -256,7 +268,7 @@
           <button class="mosaic-tile" data-cat="perfumes" data-en="Perfumes & Testers" data-ar="عطور وتستر">Perfumes &amp; Testers</button>
           <button class="mosaic-tile" data-cat="subscriptions" data-en="Subscriptions" data-ar="اشتراكات">Subscriptions</button>
           <button class="mosaic-tile" data-cat="clothing" data-en="Clothing" data-ar="ملابس">Clothing</button>
-          <button class="mosaic-tile" data-cat="services" data-en="Services" data-ar="خدمات">Services</button>
+          <button class="mosaic-tile" data-cat="games" data-en="Games" data-ar="ألعاب">Games</button>
         </div>
       </div>
     </div>
@@ -281,6 +293,7 @@
         <input type="text" id="pageSearch" data-en-placeholder="Search products..." data-ar-placeholder="ابحث عن المنتجات..." placeholder="Search products...">
         <div class="cat-strip" id="catStrip"></div>
       </div>
+      <div id="bundleZone"></div>
       <div class="product-grid" id="productsGrid"></div>
       <div class="empty" id="noResultsPage" data-en="No products match your search." data-ar="لا توجد منتجات مطابقة.">No products match your search.</div>
     </div>
@@ -322,7 +335,7 @@
         <div class="info-card"><div class="ico">💬</div><h3 data-en="WhatsApp Order" data-ar="طلب عبر واتساب">WhatsApp Order</h3><p data-en="Place your order on WhatsApp and we guide you through payment." data-ar="قدّم طلبك عبر واتساب وسنرشدك خطوة بخطوة.">Place your order on WhatsApp and we guide you through payment.</p><span class="status live" data-en="Available" data-ar="متاح">Available</span></div>
         <div class="info-card"><div class="ico">💳</div><h3 data-en="Card & Apple Pay" data-ar="بطاقة وآبل باي">Card &amp; Apple Pay</h3><p data-en="Online card checkout is planned for a later version." data-ar="الدفع بالبطاقة عبر الإنترنت قيد التخطيط لإصدار لاحق.">Online card checkout is planned for a later version.</p><span class="status" data-en="Coming soon" data-ar="قريباً">Coming soon</span></div>
       </div>
-      <div class="note" data-en="Your order is confirmed only after payment is received and verified. We send a confirmation on WhatsApp once your order is processed. For subscriptions, access details are delivered after confirmation." data-ar="يُؤكَّد طلبك بعد استلام الدفع والتحقق منه. سنرسل تأكيداً عبر واتساب. تُسلَّم بيانات الاشتراكات بعد التأكيد.">Your order is confirmed only after payment is received and verified. We send a confirmation on WhatsApp once your order is processed. For subscriptions, access details are delivered after confirmation.</div>
+      <div class="note" data-en="Your order is confirmed only after payment is received and verified. We send a confirmation on WhatsApp once your order is processed. For subscriptions and games, access details are delivered after confirmation." data-ar="يُؤكَّد طلبك بعد استلام الدفع والتحقق منه. سنرسل تأكيداً عبر واتساب. تُسلَّم بيانات الاشتراكات والألعاب بعد التأكيد.">Your order is confirmed only after payment is received and verified. We send a confirmation on WhatsApp once your order is processed. For subscriptions and games, access details are delivered after confirmation.</div>
       <div style="height:64px"></div>
     </div>
   </section>
@@ -339,7 +352,7 @@
         <h2 data-en="Storage" data-ar="التخزين">Storage</h2>
         <p data-en="Account data is stored securely with Google Firebase. You can ask us to delete your account and data at any time." data-ar="تُخزَّن بيانات الحساب بأمان لدى Google Firebase. يمكنك طلب حذف حسابك وبياناتك في أي وقت.">Account data is stored securely with Google Firebase. You can ask us to delete your account and data at any time.</p>
         <h2 data-en="Returns" data-ar="الاستبدال">Returns</h2>
-        <p data-en="Unopened physical items can be exchanged within 3 days. Opened products, activated subscriptions and delivered services are not refundable." data-ar="يمكن استبدال المنتجات المادية غير المفتوحة خلال ٣ أيام. لا تُسترد المنتجات المفتوحة أو الاشتراكات المفعّلة أو الخدمات المنفذة.">Unopened physical items can be exchanged within 3 days. Opened products, activated subscriptions and delivered services are not refundable.</p>
+        <p data-en="Unopened physical items can be exchanged within 3 days. Opened products, activated subscriptions and delivered games are not refundable." data-ar="يمكن استبدال المنتجات المادية غير المفتوحة خلال ٣ أيام. لا تُسترد المنتجات المفتوحة أو الاشتراكات المفعّلة أو الألعاب المسلَّمة.">Unopened physical items can be exchanged within 3 days. Opened products, activated subscriptions and delivered games are not refundable.</p>
         <h2 data-en="Contact" data-ar="التواصل">Contact</h2>
         <p data-en="Questions about this policy can be sent through our Contact page." data-ar="يمكنك إرسال أسئلتك عبر صفحة التواصل.">Questions about this policy can be sent through our Contact page.</p>
       </div>
@@ -357,7 +370,7 @@
   <!-- ABOUT -->
   <section id="page-about" class="page">
     <div class="wrap">
-      <div class="page-title"><h1 data-en="About Laitheo" data-ar="عن لايثيو">About Laitheo</h1><p data-en="Based in Dubai, Laitheo puts fragrances, digital subscriptions, clothing and services in one storefront." data-ar="مقرها دبي، تجمع لايثيو العطور والاشتراكات الرقمية والملابس والخدمات في متجر واحد.">Based in Dubai, Laitheo puts fragrances, digital subscriptions, clothing and services in one storefront.</p></div>
+      <div class="page-title"><h1 data-en="About Laitheo" data-ar="عن لايثيو">About Laitheo</h1><p data-en="Based in Dubai, Laitheo puts fragrances, digital subscriptions, clothing and games in one storefront." data-ar="مقرها دبي، تجمع لايثيو العطور والاشتراكات الرقمية والملابس والألعاب في متجر واحد.">Based in Dubai, Laitheo puts fragrances, digital subscriptions, clothing and games in one storefront.</p></div>
       <div class="cards section">
         <div class="info-card"><h3 data-en="Genuine products" data-ar="منتجات أصلية">Genuine products</h3><p data-en="Every item is sourced from trusted suppliers and checked before it ships." data-ar="كل منتج من موردين موثوقين ويُفحص قبل الشحن.">Every item is sourced from trusted suppliers and checked before it ships.</p></div>
         <div class="info-card"><h3 data-en="Clear pricing" data-ar="أسعار واضحة">Clear pricing</h3><p data-en="Prices are shown in AED on every listing, with no surprises at checkout." data-ar="الأسعار بالدرهم على كل منتج بلا مفاجآت.">Prices are shown in AED on every listing, with no surprises at checkout.</p></div>
@@ -385,7 +398,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-grid">
-      <div><div class="brand">Laitheo</div><p data-en="Perfumes, subscriptions, clothing and services in one place." data-ar="عطور واشتراكات وملابس وخدمات في مكان واحد.">Perfumes, subscriptions, clothing and services in one place.</p></div>
+      <div><div class="brand">Laitheo</div><p data-en="Perfumes, subscriptions, clothing and games in one place." data-ar="عطور واشتراكات وملابس وألعاب في مكان واحد.">Perfumes, subscriptions, clothing and games in one place.</p></div>
       <div><h4 data-en="Navigate" data-ar="التنقل">Navigate</h4>
         <button data-go="home" data-en="Home" data-ar="الرئيسية">Home</button>
         <button data-go="products" data-en="Products" data-ar="المنتجات">Products</button>
@@ -445,72 +458,87 @@
 const WHATSAPP_NUMBER = '971XXXXXXXXX'; // Laitheo's WhatsApp number, digits only with country code
 const CURRENCY = 'AED';
 
-/* ---------- DATA (same shape as the old Lamoh product data, bilingual) ----------
-   category: perfumes | subscriptions | clothing | services
-   notes    = highlight tags shown on card + detail (old "fragrance notes")
-   specs    = [label, value] rows on the detail page
-   color    = thumbnail/detail gradient colour                                   */
+/* ---------- DATA ----------
+   category: perfumes | subscriptions | clothing | games
+   img      = optional path/URL to a real photo; falls back to the "color" gradient if empty
+   notes    = highlight tags shown on card + detail
+   specs    = [label, value] rows on the detail page                                        */
 const categories = [
   {id:'all',           name:{en:'All',                 ar:'الكل'}},
   {id:'perfumes',      name:{en:'Perfumes & Testers',  ar:'عطور وتستر'}},
   {id:'subscriptions', name:{en:'Subscriptions',       ar:'اشتراكات'}},
   {id:'clothing',      name:{en:'Clothing',            ar:'ملابس'}},
-  {id:'services',      name:{en:'Services',            ar:'خدمات'}}
+  {id:'games',         name:{en:'Games',               ar:'ألعاب'}}
 ];
 const notesLabel = {
   perfumes:{en:'Fragrance notes',ar:'مكونات العطر'}, subscriptions:{en:'Includes',ar:'يشمل'},
-  clothing:{en:'Features',ar:'المميزات'}, services:{en:'Includes',ar:'يشمل'}
+  clothing:{en:'Features',ar:'المميزات'}, games:{en:'Platform',ar:'المنصة'}
 };
 const products = [
-  {id:1,category:'perfumes',catLabel:{en:'Oriental · Woody',ar:'شرقي · خشبي'},name:{en:'Amber Noir EDP 100ml',ar:'عنبر نوير 100مل'},price:320,badge:{en:'Bestseller',ar:'الأكثر مبيعاً'},featured:true,
+  {id:1,category:'perfumes',catLabel:{en:'Oriental · Woody',ar:'شرقي · خشبي'},name:{en:'Amber Noir EDP 100ml',ar:'عنبر نوير 100مل'},price:320,badge:{en:'Bestseller',ar:'الأكثر مبيعاً'},featured:true,img:'',
    bio:{en:'A warm oriental fragrance with amber and oud at its heart, settling into a long vanilla and smoke trail.',ar:'عطر شرقي دافئ قلبه العنبر والعود، يستقر بأثر طويل من الفانيليا والدخان.'},
    notes:{en:['Amber','Oud','Vanilla','Smoke'],ar:['عنبر','عود','فانيليا','دخان']},
    specs:{en:[['Size','100 ml'],['Concentration','EDP'],['Gender','Unisex']],ar:[['الحجم','١٠٠ مل'],['التركيز','EDP'],['الجنس','للجنسين']]},color:'#b8742f'},
-  {id:2,category:'perfumes',catLabel:{en:'Tester · Oriental',ar:'تستر · شرقي'},name:{en:'Amber Noir Tester 5ml',ar:'عنبر نوير تستر 5مل'},price:45,badge:{en:'Try first',ar:'جرّب أولاً'},featured:true,
+  {id:2,category:'perfumes',catLabel:{en:'Tester · Oriental',ar:'تستر · شرقي'},name:{en:'Amber Noir Tester 5ml',ar:'عنبر نوير تستر 5مل'},price:45,badge:{en:'Try first',ar:'جرّب أولاً'},featured:true,img:'',
    bio:{en:'Try Amber Noir before committing to the full bottle. Same fragrance in a travel-size tester.',ar:'جرّب عنبر نوير قبل شراء الزجاجة الكاملة. نفس العطر بحجم تستر صغير.'},
    notes:{en:['Amber','Oud','Vanilla'],ar:['عنبر','عود','فانيليا']},
    specs:{en:[['Size','5 ml'],['Concentration','EDP'],['Gender','Unisex']],ar:[['الحجم','٥ مل'],['التركيز','EDP'],['الجنس','للجنسين']]},color:'#8a5522'},
-  {id:3,category:'perfumes',catLabel:{en:'Fresh · Citrus',ar:'منعش · حمضي'},name:{en:'Citrus Bloom EDT 50ml',ar:'سيتروس بلوم 50مل'},price:180,badge:null,
+  {id:3,category:'perfumes',catLabel:{en:'Fresh · Citrus',ar:'منعش · حمضي'},name:{en:'Citrus Bloom EDT 50ml',ar:'سيتروس بلوم 50مل'},price:180,badge:null,featured:false,img:'',
    bio:{en:'Bright, fresh everyday wear with citrus opening and a soft musk base.',ar:'عطر منعش ومشرق للاستخدام اليومي بافتتاحية حمضية وقاعدة مسك ناعمة.'},
    notes:{en:['Bergamot','Neroli','White Musk'],ar:['برغموت','نيرولي','مسك أبيض']},
    specs:{en:[['Size','50 ml'],['Concentration','EDT'],['Gender','Unisex']],ar:[['الحجم','٥٠ مل'],['التركيز','EDT'],['الجنس','للجنسين']]},color:'#c9a43a'},
-  {id:4,category:'subscriptions',catLabel:{en:'Music',ar:'موسيقى'},name:{en:'Spotify Lifetime',ar:'سبوتيفاي مدى الحياة'},price:220,badge:{en:'Popular',ar:'شائع'},featured:true,
+  {id:4,category:'subscriptions',catLabel:{en:'Music',ar:'موسيقى'},name:{en:'Spotify Lifetime',ar:'سبوتيفاي مدى الحياة'},price:220,badge:{en:'Popular',ar:'شائع'},featured:true,img:'',
    bio:{en:'One-time activation on your account with no recurring fees. Access details delivered after payment is confirmed.',ar:'تفعيل لمرة واحدة على حسابك بدون رسوم متكررة. تُسلَّم التفاصيل بعد تأكيد الدفع.'},
    notes:{en:['Ad-free','Offline downloads','No renewals'],ar:['بدون إعلانات','تحميل بدون إنترنت','بدون تجديد']},
    specs:{en:[['Duration','Lifetime'],['Delivery','After payment'],['Type','Digital']],ar:[['المدة','مدى الحياة'],['التسليم','بعد الدفع'],['النوع','رقمي']]},color:'#2f8f5b'},
-  {id:5,category:'subscriptions',catLabel:{en:'Music',ar:'موسيقى'},name:{en:'Spotify 12 Months',ar:'سبوتيفاي 12 شهراً'},price:90,badge:null,
+  {id:5,category:'subscriptions',catLabel:{en:'Music',ar:'موسيقى'},name:{en:'Spotify 12 Months',ar:'سبوتيفاي 12 شهراً'},price:90,badge:null,featured:false,img:'',
    bio:{en:'A full year of Premium access on your account.',ar:'سنة كاملة من اشتراك بريميوم على حسابك.'},
    notes:{en:['Ad-free','Offline downloads'],ar:['بدون إعلانات','تحميل بدون إنترنت']},
    specs:{en:[['Duration','12 months'],['Delivery','After payment'],['Type','Digital']],ar:[['المدة','١٢ شهراً'],['التسليم','بعد الدفع'],['النوع','رقمي']]},color:'#237348'},
-  {id:6,category:'clothing',catLabel:{en:'Tops',ar:'قمصان'},name:{en:'Oversized Tee — Sand',ar:'تيشيرت أوفرسايز — رملي'},price:95,badge:{en:'New',ar:'جديد'},featured:true,
+  {id:6,category:'clothing',catLabel:{en:'Tops',ar:'قمصان'},name:{en:'Oversized Tee — Sand',ar:'تيشيرت أوفرسايز — رملي'},price:95,badge:{en:'New',ar:'جديد'},featured:true,img:'',
    bio:{en:'Heavyweight cotton oversized tee with a relaxed unisex fit.',ar:'تيشيرت قطني ثقيل بقصة أوفرسايز مريحة للجنسين.'},
    notes:{en:['Heavyweight cotton','Unisex fit'],ar:['قطن ثقيل','قصة للجنسين']},
    specs:{en:[['Sizes','S – XL'],['Colour','Sand'],['Gender','Unisex']],ar:[['المقاسات','S – XL'],['اللون','رملي'],['الجنس','للجنسين']]},color:'#b7a27c'},
-  {id:7,category:'clothing',catLabel:{en:'Outerwear',ar:'ملابس خارجية'},name:{en:'Cropped Hoodie — Ink',ar:'هودي قصير — أزرق داكن'},price:165,badge:null,
+  {id:7,category:'clothing',catLabel:{en:'Outerwear',ar:'ملابس خارجية'},name:{en:'Cropped Hoodie — Ink',ar:'هودي قصير — أزرق داكن'},price:165,badge:null,featured:false,img:'',
    bio:{en:'Cropped hoodie with a brushed fleece interior.',ar:'هودي قصير ببطانة فليس ناعمة.'},
    notes:{en:['Brushed fleece','Cropped cut'],ar:['فليس ناعم','قصة قصيرة']},
    specs:{en:[['Sizes','S – XL'],['Colour','Ink'],['Gender','Unisex']],ar:[['المقاسات','S – XL'],['اللون','أزرق داكن'],['الجنس','للجنسين']]},color:'#1f3a44'},
-  {id:8,category:'services',catLabel:{en:'Delivery',ar:'توصيل'},name:{en:'Express Delivery',ar:'توصيل سريع'},price:25,badge:null,
-   bio:{en:'Same-day delivery within Dubai for physical orders.',ar:'توصيل في نفس اليوم داخل دبي للطلبات المادية.'},
-   notes:{en:['Same day','Dubai only'],ar:['نفس اليوم','دبي فقط']},
-   specs:{en:[['Coverage','Dubai'],['Speed','Same day']],ar:[['التغطية','دبي'],['السرعة','نفس اليوم']]},color:'#3E7C74'},
-  {id:9,category:'services',catLabel:{en:'Gifting',ar:'هدايا'},name:{en:'Gift Wrapping',ar:'تغليف هدايا'},price:15,badge:null,
-   bio:{en:'Add premium gift wrapping and a note to any physical order.',ar:'أضف تغليف هدايا فاخر وبطاقة لأي طلب مادي.'},
-   notes:{en:['Premium wrap','Handwritten note'],ar:['تغليف فاخر','بطاقة مكتوبة']},
-   specs:{en:[['Applies to','Physical orders']],ar:[['ينطبق على','الطلبات المادية']]},color:'#8f8571'}
+  {id:10,category:'games',catLabel:{en:'Action · PC/PS5',ar:'أكشن · PC/PS5'},name:{en:'Frontier Racer — Digital Key',ar:'فرونتير ريسر — مفتاح رقمي'},price:60,badge:{en:'New',ar:'جديد'},featured:true,img:'',
+   bio:{en:'Full digital key, activated on your own account. Sent after payment is confirmed.',ar:'مفتاح رقمي كامل يُفعَّل على حسابك الخاص، يُرسل بعد تأكيد الدفع.'},
+   notes:{en:['PC','PS5','Single key'],ar:['PC','PS5','مفتاح واحد']},
+   specs:{en:[['Platform','PC / PS5'],['Delivery','Digital key after payment'],['Region','Global']],ar:[['المنصة','PC / PS5'],['التسليم','مفتاح رقمي بعد الدفع'],['المنطقة','عالمي']]},color:'#4a3d8f'},
+  {id:11,category:'games',catLabel:{en:'Open World · PC',ar:'عالم مفتوح · PC'},name:{en:'Sandstone Legends — Digital Key',ar:'ساندستون ليجندز — مفتاح رقمي'},price:75,badge:null,featured:true,img:'',
+   bio:{en:'Open-world adventure, PC digital key delivered to your account.',ar:'مغامرة بعالم مفتوح، مفتاح رقمي لجهاز PC يُسلَّم لحسابك.'},
+   notes:{en:['PC','Single key'],ar:['PC','مفتاح واحد']},
+   specs:{en:[['Platform','PC'],['Delivery','Digital key after payment'],['Region','Global']],ar:[['المنصة','PC'],['التسليم','مفتاح رقمي بعد الدفع'],['المنطقة','عالمي']]},color:'#5b4d8f'},
+  {id:12,category:'games',catLabel:{en:'Sports · Xbox/PS5',ar:'رياضة · Xbox/PS5'},name:{en:'Pro League 26 — Digital Key',ar:'برو ليج 26 — مفتاح رقمي'},price:95,badge:{en:'Popular',ar:'شائع'},featured:false,img:'',
+   bio:{en:'This year\'s sports title, digital key for Xbox or PS5.',ar:'إصدار هذا العام من اللعبة الرياضية، مفتاح رقمي لـ Xbox أو PS5.'},
+   notes:{en:['Xbox','PS5','Single key'],ar:['Xbox','PS5','مفتاح واحد']},
+   specs:{en:[['Platform','Xbox / PS5'],['Delivery','Digital key after payment'],['Region','Global']],ar:[['المنصة','Xbox / PS5'],['التسليم','مفتاح رقمي بعد الدفع'],['المنطقة','عالمي']]},color:'#3b6b8f'},
+  {id:13,category:'games',catLabel:{en:'Strategy · PC',ar:'استراتيجية · PC'},name:{en:'Iron Reach — Digital Key',ar:'آيرون ريتش — مفتاح رقمي'},price:55,badge:null,featured:false,img:'',
+   bio:{en:'Deep strategy title, PC digital key delivered after payment.',ar:'لعبة استراتيجية عميقة، مفتاح رقمي لـ PC يُسلَّم بعد الدفع.'},
+   notes:{en:['PC','Single key'],ar:['PC','مفتاح واحد']},
+   specs:{en:[['Platform','PC'],['Delivery','Digital key after payment'],['Region','Global']],ar:[['المنصة','PC'],['التسليم','مفتاح رقمي بعد الدفع'],['المنطقة','عالمي']]},color:'#6b4a4a'}
+];
+/* GAME BUNDLES: pick any N games from the Games category for one bundle price.
+   count = how many games the customer picks, price = bundle total, pop = highlight card. */
+const gameBundles = [
+  {id:'b3',count:3,price:150,pop:false,name:{en:'Starter Bundle',ar:'حزمة البداية'}},
+  {id:'b5',count:5,price:220,pop:true, name:{en:'Value Bundle',ar:'حزمة القيمة'}},
+  {id:'b10',count:10,price:400,pop:false,name:{en:'Mega Bundle',ar:'الحزمة الكبرى'}}
 ];
 const faqs = [
   {q:{en:'Are your products genuine?',ar:'هل منتجاتكم أصلية؟'},a:{en:'Yes. Every item is sourced from trusted suppliers and checked before it ships.',ar:'نعم. كل منتج من موردين موثوقين ويُفحص قبل الشحن.'}},
   {q:{en:'How do I place an order?',ar:'كيف أقدم طلباً؟'},a:{en:'Open any product and tap "Buy on WhatsApp". Your order message is filled in for you.',ar:'افتح أي منتج واضغط "اشتر عبر واتساب" وستُعبأ رسالة الطلب تلقائياً.'}},
-  {q:{en:'How do I receive a subscription?',ar:'كيف أستلم الاشتراك؟'},a:{en:'After payment is confirmed we activate it on your account or send the access details on WhatsApp.',ar:'بعد تأكيد الدفع نفعّله على حسابك أو نرسل التفاصيل عبر واتساب.'}},
+  {q:{en:'How do I receive a subscription or a game?',ar:'كيف أستلم الاشتراك أو اللعبة؟'},a:{en:'After payment is confirmed we activate it on your account or send the key/access details on WhatsApp.',ar:'بعد تأكيد الدفع نفعّله على حسابك أو نرسل المفتاح/التفاصيل عبر واتساب.'}},
   {q:{en:'What payment methods do you accept?',ar:'ما طرق الدفع المقبولة؟'},a:{en:'Bank transfer, cash on delivery for physical items, and PayPal/Wise on request.',ar:'التحويل البنكي، والدفع عند الاستلام للمنتجات المادية، وباي بال/وايز عند الطلب.'}},
-  {q:{en:'Can I return or exchange something?',ar:'هل يمكنني الإرجاع أو الاستبدال؟'},a:{en:'Unopened physical items can be exchanged within 3 days. Activated subscriptions and delivered services are not refundable.',ar:'يمكن استبدال المنتجات المادية غير المفتوحة خلال ٣ أيام. الاشتراكات المفعّلة والخدمات المنفذة لا تُسترد.'}}
+  {q:{en:'Can I return or exchange something?',ar:'هل يمكنني الإرجاع أو الاستبدال؟'},a:{en:'Unopened physical items can be exchanged within 3 days. Activated subscriptions and delivered games are not refundable.',ar:'يمكن استبدال المنتجات المادية غير المفتوحة خلال ٣ أيام. الاشتراكات المفعّلة والألعاب المسلَّمة لا تُسترد.'}}
 ];
 const reviews = [
   {stars:5,text:{en:'Fast reply on WhatsApp and my Spotify was active within minutes.',ar:'رد سريع على واتساب وتم تفعيل سبوتيفاي خلال دقائق.'},author:'Ahmed K.',location:'Dubai'},
   {stars:5,text:{en:'The tester let me try the scent first. Then I ordered the full bottle.',ar:'التستر سمح لي بتجربة العطر أولاً، ثم طلبت الزجاجة الكاملة.'},author:'Sara M.',location:'Abu Dhabi'},
   {stars:5,text:{en:'Great quality tee and quick delivery.',ar:'جودة رائعة للتيشيرت وتوصيل سريع.'},author:'Layla R.',location:'Sharjah'},
-  {stars:4,text:{en:'Smooth ordering and clear prices.',ar:'طلب سلس وأسعار واضحة.'},author:'Omar F.',location:'Dubai'}
+  {stars:4,text:{en:'Picked the 5-game bundle, saved a good amount over buying each one alone.',ar:'اخترت حزمة الخمس ألعاب ووفرت مبلغاً جيداً مقارنة بالشراء منفرداً.'},author:'Omar F.',location:'Dubai'}
 ];
 /* NOTE: reviews above are sample text. Replace with real customer reviews. */
 
@@ -548,14 +576,14 @@ function matches(p){
   const txt = !s || p.name[L].toLowerCase().includes(s) || p.catLabel[L].toLowerCase().includes(s) || p.notes[L].some(n=>n.toLowerCase().includes(s));
   return catOk && txt;
 }
+function thumbStyle(p){ return p.img ? `background-image:url('${p.img}')` : `background:linear-gradient(135deg,${p.color},#0d1517)`; }
 function cardHTML(p){
-  return `<div class="product-card"><div class="thumb" style="background:linear-gradient(135deg,${p.color},#0d1517)">${p.badge?`<span class="badge">${p.badge[L]}</span>`:''}</div>
+  return `<div class="product-card"><div class="thumb" style="${thumbStyle(p)}">${p.badge?`<span class="badge">${p.badge[L]}</span>`:''}</div>
   <p class="cat-label">${p.catLabel[L]}</p><h3>${p.name[L]}</h3><p class="desc">${p.bio[L].substring(0,95)}...</p>
   <div class="tags">${p.notes[L].map(n=>`<span class="tag">${n}</span>`).join('')}</div>
   <div class="product-foot"><div class="price">${p.price}<sup>${CURRENCY}</sup></div><button class="view-btn" onclick="location.hash='product-${p.id}'">${L==='ar'?'عرض التفاصيل':'View details'}</button></div></div>`;
 }
 function renderFeatured(){
-  const list = products.filter(p=>p.featured && matches({...p,category:activeCat==='all'?p.category:p.category}));
   const src = searchTerm ? products.filter(p=>matches(p)) : products.filter(p=>p.featured);
   $('featuredGrid').innerHTML = src.map(cardHTML).join('');
   $('noResults').style.display = src.length?'none':'block';
@@ -563,10 +591,32 @@ function renderFeatured(){
 function renderCats(){
   $('catStrip').innerHTML = categories.map(c=>`<button class="cat-chip ${c.id===activeCat?'active':''}" data-cat="${c.id}">${c.name[L]}</button>`).join('');
 }
+function bundleOrderText(b){ return `Hello Laitheo! I'd like the ${b.name.en} (${b.count} games for ${b.price} ${CURRENCY}). My chosen games are: `; }
+function renderBundles(){
+  if(activeCat!=='games'){ $('bundleZone').innerHTML=''; return; }
+  const cardsHTML = gameBundles.map(b=>`
+    <div class="bundle-card ${b.pop?'pop':''}">
+      ${b.pop?`<span class="bundle-pop-tag">${L==='ar'?'الأكثر طلباً':'Most popular'}</span>`:''}
+      <div class="bundle-count">${b.count}<span>${L==='ar'?'ألعاب':'games'}</span></div>
+      <div class="bundle-name">${b.name[L]}</div>
+      <div class="bundle-price">${b.price}<sup style="font-size:.6em">${CURRENCY}</sup></div>
+      <div class="bundle-per">${(b.price/b.count).toFixed(0)} ${CURRENCY} ${L==='ar'?'لكل لعبة':'per game'}</div>
+      <button class="btn btn-primary" onclick="orderBundle('${b.id}')">${L==='ar'?'اختر هذه الحزمة':'Choose this bundle'}</button>
+    </div>`).join('');
+  $('bundleZone').innerHTML = `
+    <div class="sec-head" style="margin-top:4px"><h2>${L==='ar'?'حزم الألعاب':'Game bundles'}</h2><span>${L==='ar'?'اختر عدد الألعاب وسنرسل لك القائمة عبر واتساب':'Pick a bundle size, choose your games on WhatsApp'}</span></div>
+    <div class="bundle-grid">${cardsHTML}</div>
+    <div class="sec-head"><h2>${L==='ar'?'ألعاب فردية':'Individual games'}</h2></div>`;
+}
+function orderBundle(id){
+  const b = gameBundles.find(x=>x.id===id); if(!b) return;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(bundleOrderText(b))}`,'_blank');
+}
 function renderProducts(){
   const src = products.filter(matches);
   $('productsGrid').innerHTML = src.map(cardHTML).join('');
   $('noResultsPage').style.display = src.length?'none':'block';
+  renderBundles();
 }
 function renderFAQ(){
   $('faqList').innerHTML = faqs.map((f,i)=>`<div class="faq-item" id="faq${i}"><button class="faq-q" onclick="toggleFAQ(${i})"><span>${f.q[L]}</span><span class="faq-icon">+</span></button><div class="faq-a"><p>${f.a[L]}</p></div></div>`).join('');
@@ -581,7 +631,7 @@ function renderAll(){ renderCats(); renderFeatured(); renderProducts(); renderFA
 function orderText(p){ return `Hello Laitheo! I'm interested in ordering: ${p.name.en} (${p.price} ${CURRENCY}).`; }
 function openDetail(id, keepPrev){
   const p = products.find(x=>x.id===id); if(!p){ location.hash='products'; return; }
-  $('detailImg').style.background = `linear-gradient(135deg,${p.color},#0d1517)`;
+  $('detailImg').style.cssText = thumbStyle(p);
   $('detailCat').textContent = p.catLabel[L]; $('detailName').textContent = p.name[L];
   $('detailPrice').innerHTML = `${p.price}<sup>${CURRENCY}</sup>`; $('detailBio').textContent = p.bio[L];
   $('notesLabel').textContent = notesLabel[p.category][L];
@@ -644,7 +694,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, setDoc, serverTimestamp, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* Paste your Firebase web app config here (Firebase console → Project settings → Your apps → Web app). */
+/* Your live Firebase config (already connected). */
 const firebaseConfig = {
   apiKey: "AIzaSyB7Q3LAYS7aFgYkS-BAy_d-z-YaYqPphec",
   authDomain: "laitheo-a3b21.firebaseapp.com",
@@ -739,4 +789,4 @@ window.LaitheoDB = {
 };
 </script>
 </body>
-        </html>
+</html>
