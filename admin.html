@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Laitheo Admin</title>
+<style>
+:root{--ink:#1B2A2E;--base:#FAF7F1;--acc:#C0693B;--line:#DCD5C9;--card:#fff;--t2:#5d5b52;--soft:#eee8dc}
+@media(prefers-color-scheme:dark){:root{--ink:#EDE8DD;--base:#12191B;--acc:#D9814F;--line:#2b3a3d;--card:#1a2427;--t2:#a7a597;--soft:#223035}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--base);color:var(--ink);font:15px/1.5 system-ui,sans-serif;padding:16px;max-width:900px;margin:0 auto}
+h1{font-size:1.3rem}h2{font-size:1.1rem;margin:18px 0 8px}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+textarea{min-height:70px;resize:vertical}
+label{display:block;font-size:.8rem;font-weight:600;color:var(--t2);margin:10px 0 4px}
+.btn{padding:10px 16px;border-radius:8px;border:1px solid var(--ink);background:none;cursor:pointer;font-weight:600}
+.btn.p{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.d{border-color:#c0392b;color:#c0392b}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.item{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}
+.item .th{width:56px;height:56px;border-radius:8px;background-size:cover;background-position:center;flex:none}
+.item .inf{flex:1;min-width:0}.item .inf b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item small{color:var(--t2)}
+.tag{font-size:.7rem;background:var(--soft);padding:2px 8px;border-radius:99px;margin-inline-start:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.item{flex-wrap:wrap}}
+.chk{display:flex;gap:8px;align-items:center;margin-top:12px}.chk input{width:auto}
+#form{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+#prev{width:120px;height:90px;border-radius:8px;background-size:cover;background-position:center;background:var(--soft);margin-top:6px}
+.center{text-align:center;padding:60px 10px}.msg{margin-top:10px;color:#c0392b}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--base);padding:10px 18px;border-radius:99px;opacity:0;transition:.25s;pointer-events:none}.toast.show{opacity:1}
+[hidden]{display:none!important}
+</style></head><body>
+
+<div id="login" class="center" hidden>
+  <h1>Laitheo Admin</h1><p style="color:var(--t2);margin:8px 0 18px">Owner access only.</p>
+  <button class="btn p" id="gBtn">Sign in with Google</button>
+  <div class="msg" id="loginMsg"></div>
+</div>
+
+<div id="app" hidden>
+  <div class="top"><h1>Laitheo Admin</h1>
+    <div class="row"><button class="btn" id="viewSite">View site</button><button class="btn" id="outBtn">Sign out</button></div></div>
+  <div class="row" style="margin-bottom:8px">
+    <button class="btn p" id="newBtn">+ New product</button>
+    <button class="btn" id="importBtn">Import current products</button>
+  </div>
+  <p style="color:var(--t2);font-size:.85rem" id="count"></p>
+
+  <div id="form" hidden>
+    <h2 id="formTitle">New product</h2>
+    <div class="grid">
+      <div><label>Category</label><select id="fCat"><option value="perfumes">Perfumes &amp; Testers</option><option value="subscriptions">Subscriptions</option><option value="clothing">Clothing</option><option value="games">Games</option></select></div>
+      <div><label>Price (AED)</label><input id="fPrice" type="number" min="0" step="1"></div>
+      <div><label>Name (English)</label><input id="fNameEn"></div>
+      <div><label>Name (Arabic)</label><input id="fNameAr" dir="rtl"></div>
+      <div><label>Subtitle (English) e.g. Oriental · Woody</label><input id="fCatEn"></div>
+      <div><label>Subtitle (Arabic)</label><input id="fCatAr" dir="rtl"></div>
+      <div><label>Badge (English, optional)</label><input id="fBadEn"></div>
+      <div><label>Badge (Arabic, optional)</label><input id="fBadAr" dir="rtl"></div>
+    </div>
+    <label>Description (English)</label><textarea id="fBioEn"></textarea>
+    <label>Description (Arabic)</label><textarea id="fBioAr" dir="rtl"></textarea>
+    <div class="grid">
+      <div><label>Notes / features, comma separated (English)</label><input id="fNotesEn"></div>
+      <div><label>Notes / features, comma separated (Arabic)</label><input id="fNotesAr" dir="rtl"></div>
+      <div><label>Details, one per line: Label | Value (English)</label><textarea id="fSpecEn" placeholder="Size | 100 ml"></textarea></div>
+      <div><label>Details, one per line: Label | Value (Arabic)</label><textarea id="fSpecAr" dir="rtl" placeholder="الحجم | ١٠٠ مل"></textarea></div>
+    </div>
+    <div class="grid">
+      <div><label>Fallback colour (shown when no photo)</label><input id="fColor" type="color" value="#b8742f" style="height:44px;padding:4px"></div>
+      <div><label>Photo</label><input id="fFile" type="file" accept="image/*"><div class="row" style="margin-top:6px"><div id="prev"></div><button class="btn" id="rmImg" style="align-self:flex-end">Remove photo</button></div></div>
+    </div>
+    <div class="chk"><input type="checkbox" id="fFeat"><span>Featured on Home page</span></div>
+    <div class="chk"><input type="checkbox" id="fHide"><span>Hidden (not shown on the website)</span></div>
+    <div class="row" style="margin-top:16px"><button class="btn p" id="saveBtn">Save</button><button class="btn" id="cancelBtn">Cancel</button></div>
+  </div>
+
+  <div id="list"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const ADMIN_EMAIL = 'laithnaeim@gmail.com';
+const app = initializeApp({
+  apiKey: "AIzaSyB7Q3LAYS7aFgYkS-BAy_d-z-YaYqPphec", authDomain: "laitheo-a3b21.firebaseapp.com",
+  projectId: "laitheo-a3b21", storageBucket: "laitheo-a3b21.firebasestorage.app",
+  messagingSenderId: "668791341229", appId: "1:668791341229:web:022b6e6d4161a041264624"
+});
+const auth = getAuth(app), db = getFirestore(app);
+const $ = id => document.getElementById(id);
+const toast = t => { const e = $('toast'); e.textContent = t; e.classList.add('show'); setTimeout(() => e.classList.remove('show'), 2400); };
+let items = [], editing = null, img = '', loginErr = '';
+const CATS = { perfumes: 'Perfumes & Testers', subscriptions: 'Subscriptions', clothing: 'Clothing', games: 'Games' };
+
+onAuthStateChanged(auth, async u => {
+  if (u && u.email && u.email.toLowerCase() === ADMIN_EMAIL && u.emailVerified) {
+    $('login').hidden = true; $('app').hidden = false; load();
+  } else {
+    if (u) { loginErr = 'This account is not allowed here.'; await signOut(auth); }
+    $('app').hidden = true; $('login').hidden = false; $('loginMsg').textContent = loginErr; loginErr = '';
+  }
+});
+$('gBtn').onclick = async () => { try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch (e) { $('loginMsg').textContent = 'Sign-in failed. Try again.'; } };
+$('outBtn').onclick = () => signOut(auth);
+$('viewSite').onclick = () => location.href = './';
+
+async function load() {
+  const s = await getDocs(collection(db, 'products'));
+  items = s.docs.map(d => d.data()).sort((a, b) => (a.order || 0) - (b.order || 0));
+  render();
+}
+function render() {
+  $('count').textContent = items.length + ' products' + (items.length ? '' : ' — tap "Import current products" to bring in the ones already on your site.');
+  $('list').innerHTML = items.map(p => `<div class="item">
+    <div class="th" style="${p.img ? `background-image:url('${p.img}')` : `background:${p.color || '#888'}`}"></div>
+    <div class="inf"><b>${esc(p.name.en)}</b><small>${CATS[p.category] || p.category} · ${p.price} AED
+      ${p.featured ? '<span class="tag">Featured</span>' : ''}${p.hidden ? '<span class="tag">Hidden</span>' : ''}</small></div>
+    <div class="row"><button class="btn" data-e="${p.id}">Edit</button><button class="btn d" data-d="${p.id}">Delete</button></div></div>`).join('');
+}
+const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+$('list').onclick = async e => {
+  const ed = e.target.dataset.e, de = e.target.dataset.d;
+  if (ed) openForm(items.find(p => p.id == ed));
+  if (de && confirm('Delete this product permanently?')) { await deleteDoc(doc(db, 'products', de)); toast('Deleted'); load(); }
+};
+
+const split = t => t.split(/[,،]/).map(s => s.trim()).filter(Boolean);
+const specsOut = t => t.split('\n').map(l => l.split('|').map(s => s.trim())).filter(a => a[0] && a[1]).map(a => [a[0], a[1]]);
+const specsIn = a => (a || []).map(r => r.join(' | ')).join('\n');
+const F = { fNameEn: ['name', 'en'], fNameAr: ['name', 'ar'], fCatEn: ['catLabel', 'en'], fCatAr: ['catLabel', 'ar'], fBioEn: ['bio', 'en'], fBioAr: ['bio', 'ar'] };
+
+function openForm(p) {
+  editing = p || null; img = p ? p.img || '' : '';
+  $('formTitle').textContent = p ? 'Edit product' : 'New product';
+  for (const id in F) $(id).value = p ? (p[F[id][0]] || {})[F[id][1]] || '' : '';
+  $('fCat').value = p ? p.category : 'perfumes'; $('fPrice').value = p ? p.price : '';
+  $('fBadEn').value = p && p.badge ? p.badge.en : ''; $('fBadAr').value = p && p.badge ? p.badge.ar : '';
+  $('fNotesEn').value = p ? p.notes.en.join(', ') : ''; $('fNotesAr').value = p ? p.notes.ar.join('، ') : '';
+  $('fSpecEn').value = p ? specsIn(p.specs.en) : ''; $('fSpecAr').value = p ? specsIn(p.specs.ar) : '';
+  $('fColor').value = p && /^#[0-9a-f]{6}$/i.test(p.color) ? p.color : '#b8742f';
+  $('fFeat').checked = !!(p && p.featured); $('fHide').checked = !!(p && p.hidden); $('fFile').value = '';
+  paintPrev(); $('form').hidden = false; $('form').scrollIntoView({ behavior: 'smooth' });
+}
+const paintPrev = () => $('prev').style.backgroundImage = img ? `url('${img}')` : 'none';
+$('newBtn').onclick = () => openForm(null);
+$('cancelBtn').onclick = () => $('form').hidden = true;
+$('rmImg').onclick = () => { img = ''; $('fFile').value = ''; paintPrev(); };
+
+/* Photos are shrunk in the browser and saved inside the product record, so no paid storage is needed. */
+$('fFile').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    const im = new Image();
+    im.onload = () => {
+      const s = Math.min(1, 800 / Math.max(im.width, im.height)), c = document.createElement('canvas');
+      c.width = im.width * s; c.height = im.height * s; c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+      img = c.toDataURL('image/jpeg', 0.8); paintPrev();
+    };
+    im.src = r.result;
+  };
+  r.readAsDataURL(f);
+};
+
+$('saveBtn').onclick = async () => {
+  const g = id => $(id).value.trim();
+  if (!g('fNameEn') || !g('fPrice')) return toast('Name (English) and price are required');
+  const id = editing ? editing.id : Date.now();
+  const data = {
+    id, category: $('fCat').value, price: +g('fPrice'), featured: $('fFeat').checked, hidden: $('fHide').checked,
+    order: editing ? (editing.order || 0) : (items.reduce((m, p) => Math.max(m, p.order || 0), 0) + 1),
+    img, color: $('fColor').value,
+    badge: g('fBadEn') ? { en: g('fBadEn'), ar: g('fBadAr') || g('fBadEn') } : null,
+    name: { en: g('fNameEn'), ar: g('fNameAr') || g('fNameEn') },
+    catLabel: { en: g('fCatEn'), ar: g('fCatAr') || g('fCatEn') },
+    bio: { en: g('fBioEn'), ar: g('fBioAr') || g('fBioEn') },
+    notes: { en: split(g('fNotesEn')), ar: split(g('fNotesAr')).length ? split(g('fNotesAr')) : split(g('fNotesEn')) },
+    specs: { en: specsOut(g('fSpecEn')), ar: specsOut(g('fSpecAr')).length ? specsOut(g('fSpecAr')) : specsOut(g('fSpecEn')) }
+  };
+  try { await setDoc(doc(db, 'products', String(id)), data); toast('Saved'); $('form').hidden = true; load(); }
+  catch (e) { console.error(e); toast('Save failed — check Firestore rules'); }
+};
+
+/* One-time import of the products currently hard-coded in index.html */
+$('importBtn').onclick = async () => {
+  if (items.length && !confirm('This will overwrite products with the same IDs. Continue?')) return;
+  try {
+    const html = await (await fetch('./index.html', { cache: 'no-store' })).text();
+    const m = html.match(/(?:const|let) products = (\[[\s\S]*?\n\]);\s*\/\* GAME BUNDLES/);
+    if (!m) return toast('Could not find products in index.html');
+    const list = new Function('return ' + m[1])();
+    const b = writeBatch(db);
+    list.forEach((p, i) => b.set(doc(db, 'products', String(p.id)), { ...p, order: i + 1, hidden: false }));
+    await b.commit(); toast('Imported ' + list.length + ' products'); load();
+  } catch (e) { console.error(e); toast('Import failed'); }
+};
+</script>
+</body></html>
