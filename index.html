@@ -692,7 +692,7 @@ applyLang(); renderAll(); route();
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, serverTimestamp, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, serverTimestamp, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* Your live Firebase config (already connected). */
 const firebaseConfig = {
@@ -778,6 +778,7 @@ function paint(u) {
   }
 }
 if (configured) onAuthStateChanged(auth, u => { paint(u); if (u) saveUser(u); }); else paint(null);
+  if (db) getDocs(collection(db,'products')).then(s=>{ const l=s.docs.map(d=>d.data()); if(l.length) window.setProducts(l); }).catch(console.warn);
 
 /* Exposed to the main script: saves a record when a signed-in user taps "Buy on WhatsApp". */
 window.LaitheoDB = {
