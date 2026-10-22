@@ -683,6 +683,8 @@ $('avatar').onclick=e=>{ e.stopPropagation(); $('acctMenu').classList.toggle('op
 document.addEventListener('click',e=>{ if(!e.target.closest('.acct')) $('acctMenu').classList.remove('open'); });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModals(); $('acctMenu').classList.remove('open'); }});
 
+function setProducts(l){ products=l.filter(p=>!p.hidden).sort((a,b)=>(a.order||0)-(b.order||0)); renderAll(); route(); }
+  
 /* ---------- INIT ---------- */
 try{ const t=localStorage.getItem('laitheo_theme'); if(t) document.documentElement.dataset.theme=t; if(localStorage.getItem('laitheo_lang')==='ar') toggleLang(); }catch(e){}
 applyLang(); renderAll(); route();
@@ -692,6 +694,7 @@ applyLang(); renderAll(); route();
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+if(db) getDocs(collection(db,'products')).then(s=>{ const l=s.docs.map(d=>d.data()); if(l.length) window.setProducts(l); }).catch(console.warn);
 import { getFirestore, doc, setDoc, serverTimestamp, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* Your live Firebase config (already connected). */
